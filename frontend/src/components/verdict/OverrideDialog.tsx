@@ -54,7 +54,7 @@ export const OverrideDialog: React.FC<OverrideDialogProps> = ({
       <form onSubmit={handleSubmit} className="space-y-5">
         {/* Action Selection Pills */}
         <div>
-          <label className="block text-xs font-mono uppercase tracking-wider text-[#A39EC8] mb-2.5">
+          <label className="block text-xs font-mono uppercase tracking-wider text-[#6E6268] mb-2.5">
             Decision Action
           </label>
           <div className="grid grid-cols-2 gap-3">
@@ -63,8 +63,8 @@ export const OverrideDialog: React.FC<OverrideDialogProps> = ({
               onClick={() => setAction("accept")}
               className={`p-3 rounded-xl border flex items-center gap-2.5 text-xs font-bold transition-all cursor-pointer ${
                 action === "accept"
-                  ? "bg-[#34D399]/20 border-[#34D399] text-[#34D399] shadow-[0_0_15px_rgba(52,211,153,0.3)]"
-                  : "bg-white/[0.04] border-white/[0.08] text-[#8A84C4] hover:bg-white/[0.06]"
+                  ? "bg-[#2F7D5B]/15 border-[#2F7D5B] text-[#2F7D5B]"
+                  : "bg-[#FAF4F6] border-[#F0DCE2] text-[#6E6268] hover:bg-[#FAF4F6]"
               }`}
             >
               <CheckCircle2 className="w-4 h-4 shrink-0" />
@@ -76,8 +76,8 @@ export const OverrideDialog: React.FC<OverrideDialogProps> = ({
               onClick={() => setAction("reject")}
               className={`p-3 rounded-xl border flex items-center gap-2.5 text-xs font-bold transition-all cursor-pointer ${
                 action === "reject"
-                  ? "bg-[#F43F5E]/20 border-[#F43F5E] text-[#F43F5E] shadow-[0_0_15px_rgba(244,63,94,0.3)]"
-                  : "bg-white/[0.04] border-white/[0.08] text-[#8A84C4] hover:bg-white/[0.06]"
+                  ? "bg-[#A3213F]/15 border-[#A3213F] text-[#A3213F]"
+                  : "bg-[#FAF4F6] border-[#F0DCE2] text-[#6E6268] hover:bg-[#FAF4F6]"
               }`}
             >
               <AlertOctagon className="w-4 h-4 shrink-0" />
@@ -91,11 +91,11 @@ export const OverrideDialog: React.FC<OverrideDialogProps> = ({
           <div className="flex items-center justify-between mb-1.5">
             <label
               htmlFor="override-reason"
-              className="text-xs font-mono uppercase tracking-wider text-[#A39EC8]"
+              className="text-xs font-mono uppercase tracking-wider text-[#6E6268]"
             >
               Required Justification (1–500 chars)
             </label>
-            <span className="text-[11px] font-mono text-[#8A84C4]">
+            <span className="text-[11px] font-mono text-[#6E6268]">
               {reason.length}/500
             </span>
           </div>
@@ -109,22 +109,22 @@ export const OverrideDialog: React.FC<OverrideDialogProps> = ({
               if (errorMsg) setErrorMsg(null);
             }}
             placeholder="Explain why this finding is safe or being rejected..."
-            className="w-full p-3.5 rounded-xl bg-white/[0.04] border border-[rgba(138,132,196,0.3)] focus:border-[#6C63FF] focus:ring-2 focus:ring-[#7CF5FF] text-white text-xs placeholder:text-[#716C9B] backdrop-blur-md outline-none transition-all resize-none font-sans"
+            className="w-full p-3.5 rounded-xl bg-white border border-[#F0DCE2] focus:border-[#B8556B] focus:ring-2 focus:ring-[#B8556B]/20 text-[#1E1A1C] text-xs placeholder:text-[#6E6268] outline-none transition-all resize-none font-sans"
           />
 
           {errorMsg && (
             <div
               role="alert"
-              className="mt-2 flex items-center gap-2 text-xs text-[#FCA5A5] p-2.5 rounded-lg bg-[#F43F5E]/15 border border-[#F43F5E]/40"
+              className="mt-2 flex items-center gap-2 text-xs text-[#A3213F] p-2.5 rounded-lg bg-[#A3213F]/10 border border-[#A3213F]/30"
             >
-              <AlertTriangle className="w-4 h-4 shrink-0 text-[#F43F5E]" />
+              <AlertTriangle className="w-4 h-4 shrink-0 text-[#A3213F]" />
               <span>{errorMsg}</span>
             </div>
           )}
         </div>
 
         {/* Actions */}
-        <div className="flex justify-end gap-3 pt-3 border-t border-white/[0.08]">
+        <div className="flex justify-end gap-3 pt-3 border-t border-[#F0DCE2]">
           <Button
             variant="ghost"
             size="sm"

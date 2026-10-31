@@ -4,18 +4,18 @@ import { Button } from "../components/ui/Button";
 
 export default function NotFound() {
   return (
-    <main className="min-h-screen flex items-center justify-center p-6 text-white">
-      <div className="max-w-md w-full rounded-3xl bg-[#0D0B26]/90 border border-[rgba(138,132,196,0.3)] p-8 text-center backdrop-blur-2xl shadow-[0_20px_50px_rgba(0,0,0,0.8),0_0_30px_rgba(108,99,255,0.15)]">
-        <div className="w-14 h-14 mx-auto mb-4 rounded-2xl bg-white/[0.05] border border-[rgba(138,132,196,0.3)] flex items-center justify-center text-[#7CF5FF] shadow-[0_0_20px_rgba(108,99,255,0.2)]">
+    <main className="min-h-screen flex items-center justify-center p-6 text-[#1E1A1C]">
+      <div className="max-w-md w-full rounded-2xl bg-white border border-[#F0DCE2] p-8 text-center shadow-[0_1px_2px_rgba(30,26,28,0.04)]">
+        <div className="w-14 h-14 mx-auto mb-4 rounded-xl bg-[#FAF4F6] border border-[#F0DCE2] flex items-center justify-center text-[#B8556B]">
           <ShieldX className="w-7 h-7" />
         </div>
-        <h1 className="font-display text-5xl font-extrabold text-white mb-2 tracking-tight">
+        <h1 className="font-display text-5xl font-extrabold text-[#1E1A1C] mb-2 tracking-tight">
           404
         </h1>
-        <h2 className="font-display text-lg font-bold text-[#A39EC8] mb-3">
+        <h2 className="font-display text-lg font-bold text-[#1E1A1C] mb-3">
           Endpoint Not Located
         </h2>
-        <p className="text-sm text-[#716C9B] mb-6 leading-relaxed">
+        <p className="text-sm text-[#6E6268] mb-6 leading-relaxed">
           The requested path is not registered in the SupplyShield routing perimeter.
         </p>
         <Link href="/">
