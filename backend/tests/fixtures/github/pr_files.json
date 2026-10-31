@@ -1,0 +1,11 @@
+[
+  {
+    "sha": "bb112233445566778899aabbccddeeff00112233",
+    "filename": "package.json",
+    "status": "modified",
+    "additions": 1,
+    "deletions": 1,
+    "changes": 2,
+    "patch": "@@ -10,1 +10,1 @@\n-    \"lodash\": \"4.17.20\"\n+    \"lodash\": \"4.17.21\""
+  }
+]

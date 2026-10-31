@@ -1,0 +1,6 @@
+[
+  "boto3", "botocore", "urllib3", "requests", "setuptools", "certifi",
+  "idna", "charset-normalizer", "typing-extensions", "pip", "s3transfer",
+  "packaging", "wheel", "six", "python-dateutil", "pydantic", "cryptography",
+  "click", "numpy", "pandas", "pytest", "fastapi", "uvicorn", "jinja2"
+]

@@ -1,0 +1,83 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "SupplyShield Real-Data Reference Benchmark Set",
+  "version": "1.0.0",
+  "description": "Fixed empirical reference set for real-world PRs and dependency packages. Entries are fixed prior to scan execution.",
+  "entries": [
+    {
+      "id": "REF-001",
+      "category": "routine_dependency_bump",
+      "ecosystem": "pypi",
+      "target_type": "pull_request",
+      "url": "https://github.com/tiangolo/fastapi/pull/11942",
+      "repo": "tiangolo/fastapi",
+      "pr_number": 11942,
+      "expected_level": "LOW",
+      "expected_score_range": [0, 29],
+      "reason": "Routine Dependabot version bump of testing/documentation dependencies without added install scripts, binary introductions, or new network endpoints."
+    },
+    {
+      "id": "REF-002",
+      "category": "routine_dependency_bump",
+      "ecosystem": "npm",
+      "target_type": "pull_request",
+      "url": "https://github.com/facebook/docusaurus/pull/10450",
+      "repo": "facebook/docusaurus",
+      "pr_number": 10450,
+      "expected_level": "LOW",
+      "expected_score_range": [0, 29],
+      "reason": "Standard Dependabot patch bump of minor dependencies without lifecycle script modifications, binary introductions, or AST anomalies."
+    },
+    {
+      "id": "REF-003",
+      "category": "legitimate_install_script_or_native_build",
+      "ecosystem": "npm",
+      "target_type": "pull_request",
+      "url": "https://github.com/parcel-bundler/watcher/pull/160",
+      "repo": "parcel-bundler/watcher",
+      "pr_number": 160,
+      "expected_level": "MEDIUM",
+      "expected_score_range": [30, 69],
+      "reason": "Legitimate update modifying native binding build hooks and install scripts for cross-platform precompiled binary selection; triggers install_hook_modified and native binary scrutiny without malicious intent or unfamiliar exfiltration hosts."
+    },
+    {
+      "id": "REF-004",
+      "category": "legitimate_install_script_or_native_build",
+      "ecosystem": "npm",
+      "target_type": "pull_request",
+      "url": "https://github.com/prisma/prisma/pull/24500",
+      "repo": "prisma/prisma",
+      "pr_number": 24500,
+      "expected_level": "MEDIUM",
+      "expected_score_range": [30, 69],
+      "reason": "Legitimate package update modifying postinstall engine binary verification step against known Prisma infrastructure without credential harvesting or obfuscated payloads."
+    },
+    {
+      "id": "REF-005",
+      "category": "known_malicious_package",
+      "ecosystem": "npm",
+      "target_type": "package",
+      "package_name": "flatmap-stream",
+      "version": "0.1.1",
+      "advisory_id": "GHSA-55q7-qqv5-529g",
+      "openssf_id": "MAL-2022-3112",
+      "expected_level": "HIGH",
+      "expected_score_range": [70, 100],
+      "reason": "Injected lifecycle install hook and encrypted payload targeting cryptocurrency wallet seed exfiltration in Copay/BitPay. Triggers Floor 75/80 (install hook + encoded payload / secret read)."
+    },
+    {
+      "id": "REF-006",
+      "category": "known_malicious_package",
+      "ecosystem": "pypi",
+      "target_type": "package",
+      "package_name": "ctx",
+      "version": "0.1.2",
+      "advisory_id": "GHSA-j99g-fwh9-hh93",
+      "openssf_id": "MAL-2022-2114",
+      "expected_level": "HIGH",
+      "expected_score_range": [70, 100],
+      "reason": "Hijacked PyPI package containing setup.py custom cmdclass harvesting AWS credentials (AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY) and exfiltrating them to an unassigned raw IP address. Triggers Floor 80 (install hook + secret env read + new network host)."
+    }
+  ]
+}
+

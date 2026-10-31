@@ -1,0 +1,14 @@
+Analyze the following pull request and dependency changes for potential supply chain risks.
+
+Static findings detected:
+{findings_summary}
+
+Code changes under review:
+<untrusted_content>
+{redacted_diff}
+</untrusted_content>
+
+Generate a structured review answering:
+1. What does this change practically do?
+2. Are there any hidden, obfuscated, or suspicious behaviors?
+3. Suggest an adjustment score between -10 and +10 with your confidence level.

@@ -1,0 +1,7 @@
+{
+  "name": "sample-project",
+  "version": "1.0.1",
+  "dependencies": {
+    "1odash": "^4.17.21"
+  }
+}

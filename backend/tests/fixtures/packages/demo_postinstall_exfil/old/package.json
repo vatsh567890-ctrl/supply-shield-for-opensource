@@ -1,0 +1,6 @@
+{
+  "name": "demo-postinstall-exfil",
+  "version": "1.0.0",
+  "description": "Synthetic demonstration package - baseline version",
+  "main": "index.js"
+}

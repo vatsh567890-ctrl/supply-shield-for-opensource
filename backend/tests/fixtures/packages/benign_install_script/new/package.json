@@ -1,0 +1,9 @@
+{
+  "name": "benign-install-pkg",
+  "version": "1.1.0",
+  "description": "Benign sample package updated with local build step",
+  "scripts": {
+    "test": "echo \"ok\"",
+    "postinstall": "node ./scripts/postinstall.js"
+  }
+}

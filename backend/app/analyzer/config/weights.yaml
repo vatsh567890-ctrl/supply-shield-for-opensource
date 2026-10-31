@@ -1,0 +1,43 @@
+# SupplyShield Scoring Weights and Thresholds Configuration
+
+weights:
+  install_hook_added: 25        # New install script added (preinstall, postinstall, setup.py cmdclass)
+  install_hook_modified: 15     # Existing install script modified
+  dynamic_exec: 12              # Dynamic execution (eval, Function, exec, subprocess shell)
+  encoded_payload: 15           # Base64 or hex encoded payload > 200 chars
+  high_entropy_string: 8        # Dense high-entropy string sequence
+  obfuscation: 12               # High line length, dense hex escapes, obfuscated identifiers
+  network_new_host: 20          # Outbound network call to host not in old version
+  network_known_host: 2         # Network call to host already seen in old version
+  secret_env_read: 20           # Reading sensitive environment variables (TOKEN, SECRET, KEY, etc.)
+  typosquat: 25                 # Typosquatting match against top popular packages
+  provenance_dropped: 20        # Build provenance/attestation present in old version but absent in new
+  maintainer_changed: 10        # Package publisher or maintainer account changed
+  new_owner: 10                 # Ownership transferred
+  ci_pipeline_modified: 15      # CI/CD workflow fetching remote unverified scripts
+  binary_added: 15              # New ELF, PE, Mach-O executable or dynamic library (.so, .dll, .exe, .node, .dylib)
+  osv_critical: 10              # Known OSV critical severity vulnerability
+  osv_high: 6                   # Known OSV high severity vulnerability
+  osv_medium: 3                 # Known OSV medium severity vulnerability
+  osv_low: 1                    # Known OSV low severity vulnerability
+
+caps:
+  per_rule_multiplier: 2.0      # A rule contributes at most 2 * weight to the score
+  osv_total_max: 15             # Maximum aggregate contribution from all OSV findings
+
+floors:
+  install_hook_and_network_new_host: 80
+  install_hook_and_secret_env_read: 80
+  install_hook_and_encoded_payload: 75
+  install_hook_and_binary_added: 75
+  typosquat: 70
+  provenance_dropped_and_install_hook: 70
+
+levels:
+  low_max: 29                   # LOW: 0 - 29 (GitHub Check: success)
+  medium_max: 69                # MEDIUM: 30 - 69 (GitHub Check: neutral)
+  high_min: 70                  # HIGH: 70 - 100 (GitHub Check: failure)
+
+llm:
+  min_adjustment: -10
+  max_adjustment: 10

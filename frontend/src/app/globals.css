@@ -1,0 +1,97 @@
+@import "tailwindcss";
+
+:root {
+  /* Ombre background token */
+  --bg-gradient: linear-gradient(180deg, #FFFFFF 0%, #FBE4EA 100%);
+
+  /* Core typography & semantic tokens */
+  --text-primary: #1E1A1C;
+  --text-secondary: #6E6268;
+  --border-subtle: #F0DCE2;
+  --accent: #B8556B;
+  --accent-hover: #A2485C;
+  --shadow-soft: 0 1px 2px rgba(30, 26, 28, 0.04);
+
+  /* Muted risk tier tokens paired strictly with text */
+  --risk-low: #2F7D5B;
+  --risk-medium: #9A6410;
+  --risk-high: #A3213F;
+
+  /* Surfaces & components */
+  --surface: #FFFFFF;
+  --surface-border: #F0DCE2;
+  --surface-hover: #FAF4F6;
+}
+
+@layer base {
+  * {
+    border-color: var(--border-subtle);
+  }
+
+  html {
+    min-height: 100%;
+    background: var(--bg-gradient);
+    background-attachment: fixed;
+    color: var(--text-primary);
+    font-family: var(--font-inter), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  }
+
+  body {
+    min-height: 100vh;
+    background: transparent;
+    color: var(--text-primary);
+    font-family: var(--font-inter), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background-color: rgba(184, 85, 107, 0.2);
+    color: var(--text-primary);
+  }
+
+  /* Accessible and clean scrollbars */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #F0DCE2;
+    border-radius: 999px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #B8556B;
+  }
+}
+
+/* Typography utilities */
+.font-sans,
+.font-display {
+  font-family: var(--font-inter), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+.font-mono {
+  font-family: var(--font-mono), monospace;
+}
+
+/* Minimal clean card */
+.minimal-card {
+  background-color: #FFFFFF;
+  border: 1px solid #F0DCE2;
+  border-radius: 12px;
+  box-shadow: 0 1px 2px rgba(30, 26, 28, 0.04);
+}
+
+/* Strict prefers-reduced-motion support */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

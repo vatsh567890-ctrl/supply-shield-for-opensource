@@ -1,0 +1,8 @@
+{
+  "name": "benign-install-pkg",
+  "version": "1.0.0",
+  "description": "Benign sample package",
+  "scripts": {
+    "test": "echo \"ok\""
+  }
+}

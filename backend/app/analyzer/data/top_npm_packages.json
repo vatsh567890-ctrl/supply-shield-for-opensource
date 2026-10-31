@@ -1,0 +1,8 @@
+[
+  "react", "react-dom", "lodash", "chalk", "request", "express", "moment",
+  "commander", "tslib", "async", "axios", "debug", "bluebird", "yargs",
+  "fs-extra", "glob", "uuid", "core-js", "dotenv", "webpack", "rxjs",
+  "inquirer", "body-parser", "prop-types", "mkdirp", "semver", "zone.js",
+  "colors", "minimist", "postcss", "styled-components", "terser", "babel-core",
+  "rimraf", "eslint", "prettier", "typescript", "rollup", "vite", "next"
+]

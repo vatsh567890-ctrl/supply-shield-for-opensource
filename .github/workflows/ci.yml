@@ -1,0 +1,117 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  backend-lint-and-test:
+    name: Backend Checks
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: supplyshield
+          POSTGRES_PASSWORD: supplyshield
+          POSTGRES_DB: supplyshield
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+      redis:
+        image: redis:7-alpine
+        ports:
+          - 6379:6379
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3
+        with:
+          enable-cache: true
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install backend dependencies
+        run: |
+          cd backend
+          uv sync --frozen
+
+      - name: Ruff Lint and Format Check
+        run: |
+          cd backend
+          uv run ruff check .
+          uv run ruff format --check .
+
+      - name: Mypy Strict Check
+        run: |
+          cd backend
+          uv run mypy app/security app/analyzer
+
+      - name: Run Backend Tests
+        env:
+          APP_ENV: development
+          DATABASE_URL: postgresql+psycopg://supplyshield:supplyshield@localhost:5432/supplyshield
+          REDIS_URL: redis://localhost:6379/0
+          SESSION_SECRET: test_session_secret_for_ci_runs_at_least_32_bytes_long
+        run: |
+          cd backend
+          uv run pytest tests/unit tests/security tests/integration -v --cov=app
+
+  frontend-lint-and-test:
+    name: Frontend Checks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "pnpm"
+          cache-dependency-path: frontend/pnpm-lock.yaml
+
+      - name: Install frontend dependencies
+        run: |
+          cd frontend
+          pnpm install --frozen-lockfile
+
+      - name: Lint
+        run: |
+          cd frontend
+          pnpm lint
+
+      - name: Type Check
+        run: |
+          cd frontend
+          pnpm tsc --noEmit
+
+      - name: Unit Tests
+        run: |
+          cd frontend
+          pnpm test
+
+      - name: Build
+        run: |
+          cd frontend
+          pnpm build

