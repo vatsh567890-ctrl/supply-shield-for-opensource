@@ -37,7 +37,9 @@ def test_time_split_disjoint_packages_and_ordering() -> None:
 
     # Invariant: No package may appear in both train and test
     overlap = train_pkgs.intersection(test_pkgs)
-    assert len(overlap) == 0, f"Detected {len(overlap)} overlapping packages between train and test: {overlap}"
+    assert len(overlap) == 0, (
+        f"Detected {len(overlap)} overlapping packages between train and test: {overlap}"
+    )
 
     # Invariant: Chronological ordering
     max_train_date = max(train_dates)
@@ -45,6 +47,9 @@ def test_time_split_disjoint_packages_and_ordering() -> None:
     max_val_date = max(val_dates)
     min_test_date = min(test_dates)
 
-    assert max_train_date <= min_val_date, f"Train date {max_train_date} is after val start {min_val_date}"
-    assert max_val_date <= min_test_date, f"Val date {max_val_date} is after test start {min_test_date}"
-
+    assert max_train_date <= min_val_date, (
+        f"Train date {max_train_date} is after val start {min_val_date}"
+    )
+    assert max_val_date <= min_test_date, (
+        f"Val date {max_val_date} is after test start {min_test_date}"
+    )

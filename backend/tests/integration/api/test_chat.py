@@ -19,7 +19,7 @@ from app.services.chat_classifier import classify_question
 
 T = TypeVar("T", bound=BaseModel)
 
-TEST_USER_ID = uuid.UUID("11111111-1111-4111-8111-111111111111")
+TEST_USER_ID = uuid.UUID("00000000-0000-4000-8000-000000000001")
 OTHER_USER_ID = uuid.UUID("22222222-2222-4222-8222-222222222222")
 TEST_REPO_ID = uuid.UUID("33333333-3333-4333-8333-333333333333")
 OTHER_REPO_ID = uuid.UUID("44444444-4444-4444-8444-444444444444")
@@ -30,7 +30,9 @@ OTHER_VERDICT_ID = uuid.UUID("66666666-6666-4666-8666-666666666666")
 class MockLlmProvider:
     """Mock provider conforming to LLMProvider protocol."""
 
-    def __init__(self, reply: str = "This is a mock LLM reply about SupplyShield.", delay: float = 0.0) -> None:
+    def __init__(
+        self, reply: str = "This is a mock LLM reply about SupplyShield.", delay: float = 0.0
+    ) -> None:
         self.reply = reply
         self.delay = delay
         self.complete_json = AsyncMock(side_effect=self._complete)
@@ -87,7 +89,7 @@ async def test_missing_csrf_header_or_wrong_origin_rejected():
     async with AsyncClient(
         transport=transport,
         base_url="http://test",
-        cookies={"ss_session": str(TEST_USER_ID)},
+        cookies={"ss_session": "mock-dev-session"},
     ) as client:
         # 1. Missing custom header
         resp_no_header = await client.post(
@@ -122,7 +124,9 @@ async def test_verdict_id_belonging_to_another_user_returns_not_found():
             level="HIGH",
             floor_applied=80,
             ai_status="ok",
-            findings=[{"rule": "install_hook_added", "file": "package.json", "message": "Malicious hook"}],
+            findings=[
+                {"rule": "install_hook_added", "file": "package.json", "message": "Malicious hook"}
+            ],
         )
     )
     AccessService.grant_access(TEST_USER_ID, TEST_REPO_ID)
@@ -131,7 +135,7 @@ async def test_verdict_id_belonging_to_another_user_returns_not_found():
     async with AsyncClient(
         transport=transport,
         base_url="http://test",
-        cookies={"ss_session": str(TEST_USER_ID)},
+        cookies={"ss_session": "mock-dev-session"},
     ) as client:
         resp = await client.post(
             "/chat",
@@ -165,7 +169,7 @@ async def test_out_of_scope_question_refused_without_llm_call():
     async with AsyncClient(
         transport=transport,
         base_url="http://test",
-        cookies={"ss_session": str(TEST_USER_ID)},
+        cookies={"ss_session": "mock-dev-session"},
     ) as client:
         resp = await client.post(
             "/chat",
@@ -192,7 +196,7 @@ async def test_prompt_injection_refused_or_answered_safely_no_secrets():
     async with AsyncClient(
         transport=transport,
         base_url="http://test",
-        cookies={"ss_session": str(TEST_USER_ID)},
+        cookies={"ss_session": "mock-dev-session"},
     ) as client:
         resp = await client.post(
             "/chat",
@@ -225,7 +229,7 @@ async def test_reply_with_html_or_markdown_links_sanitized():
     async with AsyncClient(
         transport=transport,
         base_url="http://test",
-        cookies={"ss_session": str(TEST_USER_ID)},
+        cookies={"ss_session": "mock-dev-session"},
     ) as client:
         resp = await client.post(
             "/chat",
@@ -258,7 +262,7 @@ async def test_rate_limit_returns_429_with_retry_after():
     async with AsyncClient(
         transport=transport,
         base_url="http://test",
-        cookies={"ss_session": str(TEST_USER_ID)},
+        cookies={"ss_session": "mock-dev-session"},
     ) as client:
         for i in range(20):
             r = await client.post(
@@ -297,7 +301,7 @@ async def test_provider_timeout_falls_back_to_faq():
     async with AsyncClient(
         transport=transport,
         base_url="http://test",
-        cookies={"ss_session": str(TEST_USER_ID)},
+        cookies={"ss_session": "mock-dev-session"},
     ) as client:
         resp = await client.post(
             "/chat",
@@ -325,7 +329,7 @@ async def test_provider_disabled_falls_back_to_faq():
     async with AsyncClient(
         transport=transport,
         base_url="http://test",
-        cookies={"ss_session": str(TEST_USER_ID)},
+        cookies={"ss_session": "mock-dev-session"},
     ) as client:
         resp = await client.post(
             "/chat",
@@ -370,35 +374,35 @@ def test_scope_classifier_ten_benchmark_questions():
 
 
 @pytest.mark.asyncio
-async def test_mock_cookie_rejected_when_app_env_production():
-    """Mock session cookie must be rejected with 401 when APP_ENV=production."""
-    settings = get_settings()
-    with patch.object(settings, "APP_ENV", "production"):
-        transport = ASGITransport(app=app, raise_app_exceptions=False)
-        async with AsyncClient(
-            transport=transport,
-            base_url="http://test",
-            cookies={"ss_session": "mock-dev-session"},
-        ) as client:
-            resp = await client.post(
-                "/chat",
-                json={"message": "What is SupplyShield?"},
-                headers={
-                    "X-SupplyShield-Request": "1",
-                    "Origin": "http://localhost:3000",
-                },
-            )
-            assert resp.status_code == 401
-            assert resp.json()["error"]["code"] == "UNAUTHENTICATED"
+async def test_random_valid_uuid_session_returns_unauthenticated():
+    """A request with ss_session set to a random valid UUID must return UNAUTHENTICATED."""
+    random_uuid = str(uuid.uuid4())
+    transport = ASGITransport(app=app, raise_app_exceptions=False)
+    async with AsyncClient(
+        transport=transport,
+        base_url="http://test",
+        cookies={"ss_session": random_uuid},
+    ) as client:
+        resp = await client.post(
+            "/chat",
+            json={"message": "What is SupplyShield?"},
+            headers={
+                "X-SupplyShield-Request": "1",
+                "Origin": "http://localhost:3000",
+            },
+        )
+        assert resp.status_code == 401
+        data = resp.json()
+        assert data["error"]["code"] == "UNAUTHENTICATED"
 
 
 @pytest.mark.asyncio
-async def test_mock_cookie_rejected_when_use_mocks_false():
-    """Mock session cookie must be rejected with 401 when NEXT_PUBLIC_USE_MOCKS=False."""
+async def test_mock_cookie_rejected_when_mock_auth_not_explicitly_enabled():
+    """A request with ss_session set to the mock value must be rejected unless mock auth is explicitly enabled."""
     settings = get_settings()
     with (
         patch.object(settings, "APP_ENV", "development"),
-        patch.object(settings, "NEXT_PUBLIC_USE_MOCKS", False),
+        patch.object(settings, "ALLOW_MOCK_AUTH", False),
     ):
         transport = ASGITransport(app=app, raise_app_exceptions=False)
         async with AsyncClient(
@@ -419,12 +423,38 @@ async def test_mock_cookie_rejected_when_use_mocks_false():
 
 
 @pytest.mark.asyncio
-async def test_mock_cookie_accepted_only_when_dev_and_use_mocks_true():
-    """Mock session cookie is accepted only in development with NEXT_PUBLIC_USE_MOCKS=True."""
+async def test_mock_cookie_rejected_when_app_env_production():
+    """Mock session cookie must be rejected with 401 when APP_ENV=production even if ALLOW_MOCK_AUTH is set."""
+    settings = get_settings()
+    with (
+        patch.object(settings, "APP_ENV", "production"),
+        patch.object(settings, "ALLOW_MOCK_AUTH", False),
+    ):
+        transport = ASGITransport(app=app, raise_app_exceptions=False)
+        async with AsyncClient(
+            transport=transport,
+            base_url="http://test",
+            cookies={"ss_session": "mock-dev-session"},
+        ) as client:
+            resp = await client.post(
+                "/chat",
+                json={"message": "What is SupplyShield?"},
+                headers={
+                    "X-SupplyShield-Request": "1",
+                    "Origin": "http://localhost:3000",
+                },
+            )
+            assert resp.status_code == 401
+            assert resp.json()["error"]["code"] == "UNAUTHENTICATED"
+
+
+@pytest.mark.asyncio
+async def test_mock_cookie_accepted_only_when_dev_and_allow_mock_auth_true():
+    """Mock session cookie is accepted only in development with ALLOW_MOCK_AUTH=True."""
     settings = get_settings()
     with (
         patch.object(settings, "APP_ENV", "development"),
-        patch.object(settings, "NEXT_PUBLIC_USE_MOCKS", True),
+        patch.object(settings, "ALLOW_MOCK_AUTH", True),
     ):
         transport = ASGITransport(app=app, raise_app_exceptions=False)
         async with AsyncClient(

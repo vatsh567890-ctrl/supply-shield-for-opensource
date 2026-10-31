@@ -58,6 +58,10 @@ jobs:
           uv run ruff check .
           uv run ruff format --check .
 
+      - name: Verify Honest Module Status
+        run: |
+          python scripts/check_module_status.py
+
       - name: Mypy Strict Check
         run: |
           cd backend

@@ -11,6 +11,19 @@ SupplyShield inspects pull requests and dependency version bumps before they are
 - **Worker (`backend/`)**: Background worker executing analysis jobs via `arq` and Redis.
 - **Database & Queue**: PostgreSQL and Redis.
 
+## Status
+
+| Area | Status | Description |
+| :--- | :--- | :--- |
+| **Frontend UI & Visuals** | Mock data only | Next.js 15 dashboard, 3D shield, command palette, and reports running against local mock fixtures (`NEXT_PUBLIC_USE_MOCKS=true`). |
+| **Help Chatbot Widget** | In progress | UI and backend router with FAQ fallback; session token validation integrated. |
+| **Authentication & Sessions** | In progress | Fail-closed mock authentication (`ALLOW_MOCK_AUTH`); real database sessions planned for Phase 2. |
+| **Detection Analyzer Engine** | Not started | Core detection rules, AST visitor, and manifest parsers are Phase 0 stubs (`NotImplementedError`). |
+| **GitHub Webhook Ingestion** | Not started | Webhook endpoint and HMAC signature verification are Phase 0 stubs (`NotImplementedError`). |
+| **GitHub App Integration** | Not started | Check runs, PR comment publishing, and installation tokens are Phase 0 stubs (`NotImplementedError`). |
+| **Worker Pipeline & Jobs** | Not started | Background extraction and execution queues are Phase 0 stubs (`NotImplementedError`). |
+| **Machine Learning Risk Model**| In progress (Unvalidated) | Prototype trained on synthetic data; default `ML_MODE=off`. Details in [`docs/ml-status.md`](docs/ml-status.md). |
+
 ## Quickstart
 
 ### Prerequisites
@@ -42,3 +55,10 @@ pnpm dev
 make lint
 make test
 ```
+
+## Security
+
+SupplyShield follows strict zero-trust engineering standards documented in our [Threat Model](docs/threat-model.md) and [Security Rules](.agent/rules/10-security.md).
+
+- **No Secrets in Repository**: The repository must not contain secrets, live tokens, or private keys. Environment variables must be loaded from local, git-ignored `.env` files matching the template in `.env.example`.
+- **Reporting Vulnerabilities**: If you discover a security vulnerability, please consult our [Threat Model](docs/threat-model.md) and report it responsibly.

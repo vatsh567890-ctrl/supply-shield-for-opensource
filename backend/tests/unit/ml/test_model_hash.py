@@ -44,4 +44,3 @@ def test_altered_model_bytes_rejected() -> None:
         # Should fail integrity check
         with pytest.raises(ModelSecurityError, match="Model integrity verification failed"):
             load_verified_model(tmp_path)
-

@@ -23,10 +23,6 @@ const SOURCE_LABELS: Record<string, string> = {
 };
 
 export const ChatWidget: React.FC = () => {
-  if (process.env.NEXT_PUBLIC_SHOW_CHAT !== "true") {
-    return null;
-  }
-
   const pathname = usePathname();
   const titleId = useId();
 
@@ -169,6 +165,10 @@ export const ChatWidget: React.FC = () => {
       setIsLoading(false);
     }
   };
+
+  if (process.env.NEXT_PUBLIC_SHOW_CHAT !== "true") {
+    return null;
+  }
 
   return (
     <>

@@ -119,4 +119,3 @@ def sanitize_reply(reply: str) -> str:
         cleaned = cleaned[:1200].rstrip()
 
     return cleaned
-

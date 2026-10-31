@@ -53,4 +53,3 @@ def test_features_ignore_advisories_and_labels() -> None:
     # Invariant: Features extracted must be 100% identical regardless of advisory or label fields
     for name in FEATURE_NAMES:
         assert feats_with_leakage[name] == feats_clean[name], f"Feature {name} leaked metadata!"
-

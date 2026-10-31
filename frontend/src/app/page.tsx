@@ -1,146 +1,204 @@
+/* eslint-disable @next/next/no-img-element */
 import Link from "next/link";
-import { ProceduralShield } from "@/components/shield/ProceduralShield";
+import "./landing.css";
+import { LandingShield3D } from "@/components/landing/LandingShield3D";
+import { LandingConsole } from "@/components/landing/LandingConsole";
+import { LandingFaq } from "@/components/landing/LandingFaq";
+import { LandingClientEffects } from "@/components/landing/LandingClientEffects";
 
 export const metadata = {
-  title: "SupplyShield | Pre-merge security for open source",
+  title: "SupplyShield | Securing every merge",
   description:
-    "Know what a code change does before it merges. SupplyShield checks pull requests and dependency updates for install scripts, hidden network calls, and secret access.",
+    "Malicious pull request and dependency-update detection for open source, with every verdict explained by SHAP.",
 };
-
-const HOW_IT_WORKS_STEPS = [
-  {
-    number: "01",
-    title: "A change is proposed",
-    description: "A pull request or dependency update is opened on GitHub.",
-  },
-  {
-    number: "02",
-    title: "The old and new versions are compared",
-    description: "Package contents are downloaded and compared without running any code.",
-  },
-  {
-    number: "03",
-    title: "You get a score and the reasons",
-    description: "A 0 to 100 risk level with specific findings and a short written summary.",
-  },
-];
 
 export default function LandingPage() {
   return (
-    <div className="min-h-screen flex flex-col justify-between">
-      {/* Top Bar */}
-      <header className="w-full border-b border-[#F0DCE2]/70 bg-white/60 backdrop-blur-none">
-        <div className="max-w-[1120px] mx-auto px-6 h-16 flex items-center justify-between">
-          <Link
-            href="/"
-            className="text-lg font-medium text-[#1E1A1C] tracking-tight hover:opacity-90 transition-opacity"
-          >
-            SupplyShield
-          </Link>
+    <div className="landing-root">
+      <LandingShield3D />
+      <LandingClientEffects />
 
-          <Link
-            href="/login"
-            className="text-sm font-medium text-[#6E6268] hover:text-[#B8556B] transition-colors"
-          >
+      {/* Navigation */}
+      <nav className="landing-nav">
+        <a className="landing-logo" href="#home">
+          SUPPLY
+        </a>
+        <ul>
+          <li>
+            <a href="#home">Home</a>
+          </li>
+          <li>
+            <a href="#about">About</a>
+          </li>
+          <li>
+            <a href="#core">Core</a>
+          </li>
+          <li>
+            <a href="#app">Console</a>
+          </li>
+          <li>
+            <a href="#faq">FAQ</a>
+          </li>
+        </ul>
+        <div className="landing-nav-actions">
+          <Link className="landing-btn" href="/login">
             Sign in
           </Link>
+          <a className="landing-btn landing-btn-fill" href="#app">
+            Launch console
+          </a>
         </div>
+      </nav>
+
+      {/* Hero Header */}
+      <header className="landing-hero" id="home">
+        <img
+          src="/landing/hero-graphic.webp"
+          alt=""
+          className="landing-hero-img"
+        />
+        <p className="landing-kick">Pre-merge defense</p>
+        <h1>Supply Shield</h1>
+        <h3>Securing every merge</h3>
+        <p>
+          Malicious pull request and dependency-update detection for open source,
+          with every verdict explained by SHAP. Supply Shield never executes the
+          code it checks.
+        </p>
+        <div className="landing-row">
+          <a className="landing-btn landing-btn-fill" href="#app">
+            Open the console
+          </a>
+          <Link className="landing-btn" href="/login">
+            Sign in with GitHub
+          </Link>
+          <Link className="landing-btn" href="/scan?demo=1">
+            Try a demo scan
+          </Link>
+          <a className="landing-btn" href="#about">
+            How it works
+          </a>
+        </div>
+        <span className="landing-hint">Scroll to rotate</span>
       </header>
 
-      {/* Main Content */}
-      <main className="flex-1 w-full max-w-[1120px] mx-auto px-6 py-12 md:py-20 lg:py-24 space-y-24 md:space-y-32">
-        {/* Hero Section */}
-        <section aria-label="Hero" className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-          {/* Left Column */}
-          <div className="space-y-6 max-w-xl">
-            <span className="inline-block text-sm font-medium text-[#B8556B] tracking-normal">
-              Pre-merge security for open source
-            </span>
-
-            <h1 className="text-4xl sm:text-5xl lg:text-[48px] font-medium leading-[1.15] text-[#1E1A1C] tracking-tight">
-              Know what a code change does before it merges.
-            </h1>
-
-            <p className="text-base sm:text-lg text-[#6E6268] leading-[1.6]">
-              SupplyShield checks pull requests and dependency updates for install scripts, hidden network calls, and secret access, and explains the risk in plain English.
-            </p>
-
-            <div className="pt-2 flex flex-wrap items-center gap-4 sm:gap-6">
-              <Link
-                href="/login"
-                className="inline-flex items-center justify-center px-5 py-2.5 text-base font-medium rounded-[12px] bg-[#B8556B] hover:bg-[#A2485C] text-white shadow-[0_1px_2px_rgba(30,26,28,0.04)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B8556B] focus-visible:ring-offset-2 transition-colors cursor-pointer"
-              >
-                Sign in with GitHub
-              </Link>
-
-              <Link
-                href="/scan?demo=1"
-                aria-label="Scan a pull request (Try a demo scan)"
-                className="inline-flex items-center justify-center px-5 py-2.5 text-base font-medium rounded-[12px] bg-white border border-[#F0DCE2] hover:bg-[#FAF4F6] text-[#1E1A1C] shadow-[0_1px_2px_rgba(30,26,28,0.04)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B8556B] focus-visible:ring-offset-2 transition-colors cursor-pointer"
-              >
-                Scan a pull request
-              </Link>
-
-              <a
-                href="#how-it-works"
-                className="text-sm font-medium text-[#6E6268] hover:text-[#B8556B] transition-colors"
-              >
-                How it works
-              </a>
-            </div>
-          </div>
-
-          {/* Right Column: 3D Shield */}
-          <div className="flex items-center justify-center w-full">
-            <ProceduralShield />
-          </div>
-        </section>
-
-        {/* Section C: How it works */}
-        <section
-          id="how-it-works"
-          aria-label="How it works"
-          className="pt-6 border-t border-[#F0DCE2]"
-        >
-          <div className="divide-y divide-[#F0DCE2]">
-            {HOW_IT_WORKS_STEPS.map((step) => (
-              <div
-                key={step.number}
-                className="py-8 grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-8 items-baseline"
-              >
-                <div className="md:col-span-2 text-sm font-mono text-[#B8556B]">
-                  {step.number}
-                </div>
-                <div className="md:col-span-4 text-lg font-medium text-[#1E1A1C] tracking-tight">
-                  {step.title}
-                </div>
-                <div className="md:col-span-6 text-base text-[#6E6268] leading-[1.6]">
-                  {step.description}
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Section D: Two-line statement section */}
-        <section
-          aria-label="Security guarantee"
-          className="pt-10 pb-6 border-t border-[#F0DCE2] text-center space-y-2"
-        >
-          <p className="text-xl sm:text-2xl font-medium text-[#1E1A1C] tracking-tight">
-            SupplyShield never executes the code it checks.
-          </p>
-          <p className="text-base sm:text-lg text-[#6E6268]">
-            Free for public open-source projects.
-          </p>
-        </section>
-      </main>
-
-      {/* Section E: Minimal Footer */}
-      <footer className="w-full border-t border-[#F0DCE2]/70 py-6">
-        <div className="max-w-[1120px] mx-auto px-6 text-center text-xs text-[#6E6268]">
-          SupplyShield 2026
+      {/* Marquee Strip */}
+      <div className="landing-mq" aria-hidden="true">
+        <div>
+          <span>GitHub PRs</span>
+          <span>PyPI</span>
+          <span>OSV</span>
+          <span>SHAP</span>
+          <span>XGBoost</span>
+          <span>npm soon</span>
+          <span>GitHub PRs</span>
+          <span>PyPI</span>
+          <span>OSV</span>
+          <span>SHAP</span>
+          <span>XGBoost</span>
+          <span>npm soon</span>
         </div>
+      </div>
+
+      {/* Core Section */}
+      <section className="landing-sec landing-core" id="core">
+        <div className="landing-grid">
+          <div></div>
+          <div className="landing-card landing-rv">
+            <p className="landing-lbl" style={{ marginTop: 0 }}>
+              Pre-merge defense
+            </p>
+            <h2>Supply Shield core</h2>
+            <div className="landing-stats">
+              <div>
+                <b>16</b>
+                <small>Diff signals</small>
+              </div>
+              <div>
+                <b>7</b>
+                <small>Console tabs</small>
+              </div>
+              <div>
+                <b>1</b>
+                <small>Verdict per PR</small>
+              </div>
+            </div>
+            <p>
+              <b>Signals:</b> obfuscation, install hooks, typosquats, CI changes,
+              author trust.
+            </p>
+            <p>
+              Supply Shield blends an XGBoost model with hand-written rules, so
+              obvious red flags are caught even when the model is unsure, and
+              SHAP shows which signals drove each score.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* About Section */}
+      <section className="landing-sec" id="how-it-works">
+        <span id="about" style={{ position: "absolute", top: 0 }} />
+        <div className="landing-grid">
+          <div className="landing-card landing-rv">
+            <p className="landing-lbl">About Supply Shield</p>
+            <h2>Welcome to Supply Shield, where every merge is examined</h2>
+            <p>
+              Open source runs on trust, and attackers know it. Supply Shield
+              reads every pull request and dependency update, scores the risk,
+              and shows exactly why. Fewer blind merges, clearer reviews, and a
+              safer supply chain.
+            </p>
+            <p className="landing-note">
+              Supply Shield never executes the code it checks. Free for public
+              open-source projects.
+            </p>
+          </div>
+          <div className="landing-pic landing-rv">
+            <img
+              src="/landing/about-hand.webp"
+              alt="A human hand reaching toward a wireframe hand on a monitor"
+              loading="lazy"
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* Middle Animated Marquee Band */}
+      <div className="landing-band">
+        <img src="/landing/band-background.webp" alt="" />
+        <div className="landing-mq">
+          <div>
+            <span>Scan it, flag it</span>
+            <span>Scan it, flag it</span>
+            <span>Scan it, flag it</span>
+            <span>Scan it, flag it</span>
+          </div>
+        </div>
+      </div>
+
+      {/* Console Section */}
+      <section className="landing-sec" id="app">
+        <p className="landing-lbl landing-rv">The console</p>
+        <h2 className="landing-rv">The Supply Shield console</h2>
+        <img
+          className="landing-strip landing-rv"
+          src="/landing/console-strip.webp"
+          alt="A glowing hologram figure surrounded by document, chat, chart and check icons"
+          loading="lazy"
+        />
+        <LandingConsole />
+      </section>
+
+      {/* FAQ Section */}
+      <LandingFaq />
+
+      {/* Giant Footer */}
+      <footer className="landing-footer">
+        <div className="big" aria-hidden="true">
+          SUPPLY
+        </div>
+        <p>© Supply Shield. Built for open source.</p>
       </footer>
     </div>
   );

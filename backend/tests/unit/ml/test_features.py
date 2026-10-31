@@ -197,4 +197,3 @@ def test_non_zero_deltas_and_timing() -> None:
     assert feats["dependency_count_delta"] == 1.0
     assert feats["publish_to_analysis_hours"] == 5.0
     assert feats["maintainer_count_change"] == 1.0
-

@@ -1,6 +1,5 @@
 """FastAPI application factory and middleware registration."""
 
-import logging
 from collections.abc import AsyncGenerator
 from contextlib import asynccontextmanager
 
@@ -8,7 +7,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.api.router import api_router
-from app.config import check_missing_config, get_settings
+from app.config import get_settings, validate_startup_config
 from app.errors import (
     AppError,
     app_error_handler,
@@ -26,14 +25,7 @@ async def lifespan(_app: FastAPI) -> AsyncGenerator[None, None]:
     settings = get_settings()
     setup_logging(settings.LOG_LEVEL)
 
-    # In development, check and log missing Section 12 configuration by name only
-    if settings.APP_ENV == "development":
-        missing = check_missing_config(settings)
-        if missing:
-            logging.getLogger("app.config").warning(
-                "Missing or empty Section 12 configuration variables: %s",
-                ", ".join(missing),
-            )
+    validate_startup_config(settings)
     yield
 
 

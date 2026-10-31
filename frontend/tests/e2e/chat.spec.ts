@@ -21,6 +21,10 @@ test.describe("SupplyShield Chat Assistant E2E", () => {
   test("opens chat on /verdicts/[id], asks 'What does HIGH mean?', and receives FAQ reply", async ({
     page,
   }) => {
+    test.skip(
+      process.env.NEXT_PUBLIC_SHOW_CHAT !== "true",
+      "Chat widget is gated behind NEXT_PUBLIC_SHOW_CHAT=false until confirmation"
+    );
     await page.goto("/verdicts/11111111-1111-4111-8111-111111111111");
 
     // 1. Verify floating chat trigger button is visible

@@ -1,4 +1,4 @@
-"""Health and readiness check endpoints."""
+"""Health, root discovery, and readiness check endpoints."""
 
 from typing import Any
 
@@ -7,6 +7,18 @@ from fastapi import APIRouter
 from app.config import check_missing_config
 
 router = APIRouter(tags=["health"])
+
+
+@router.get("/")
+async def root() -> dict[str, Any]:
+    """Root endpoint for API service discovery and status."""
+    return {
+        "name": "SupplyShield API",
+        "status": "ok",
+        "version": "0.1.0",
+        "docs_url": "/docs",
+        "health_url": "/health",
+    }
 
 
 @router.get("/health")

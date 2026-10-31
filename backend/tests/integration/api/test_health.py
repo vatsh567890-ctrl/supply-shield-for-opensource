@@ -1,6 +1,18 @@
-"""Integration tests for health probe endpoints."""
+"""Integration tests for health and root probe endpoints."""
 
 import pytest
+
+
+@pytest.mark.asyncio
+async def test_root_endpoint(async_client):
+    response = await async_client.get("/")
+    assert response.status_code == 200
+    data = response.json()
+    assert data["name"] == "SupplyShield API"
+    assert data["status"] == "ok"
+    assert data["docs_url"] == "/docs"
+    assert data["health_url"] == "/health"
+    assert "X-Request-ID" in response.headers
 
 
 @pytest.mark.asyncio

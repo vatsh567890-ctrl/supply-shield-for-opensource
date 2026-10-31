@@ -7,7 +7,11 @@ from httpx import ASGITransport, AsyncClient
 
 # Enforce development environment for tests
 os.environ["APP_ENV"] = "development"
+os.environ["ALLOW_MOCK_AUTH"] = "true"
 os.environ["SESSION_SECRET"] = "test_session_secret_at_least_32_bytes_long_random"
+os.environ["GITHUB_APP_WEBHOOK_SECRET"] = "test_webhook_secret_for_tests"
+os.environ["GITHUB_OAUTH_CLIENT_ID"] = "test_oauth_client_id"
+os.environ["GITHUB_OAUTH_CLIENT_SECRET"] = "test_oauth_client_secret"
 
 from app.main import app
 

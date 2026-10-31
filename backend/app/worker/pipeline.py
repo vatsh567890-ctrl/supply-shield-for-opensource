@@ -53,10 +53,12 @@ async def run_ml_shadow(
         top_features: list[dict[str, Any]] = []
         for i, val in enumerate(raw_vector):
             if val != 0.0:
-                top_features.append({
-                    "feature": FEATURE_NAMES[i],
-                    "value": val,
-                })
+                top_features.append(
+                    {
+                        "feature": FEATURE_NAMES[i],
+                        "value": val,
+                    }
+                )
 
         duration_ms = (time.perf_counter() - start_time) * 1000.0
 

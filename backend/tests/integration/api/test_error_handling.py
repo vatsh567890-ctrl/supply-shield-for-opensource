@@ -44,6 +44,7 @@ async def test_auth_routes_return_501_not_implemented():
 @pytest.mark.asyncio
 async def test_forced_unhandled_exception_returns_500_with_uuid_and_logs(caplog):
     """Verify forced server exception returns 500 with a real UUID request_id and safe message."""
+
     async def _forced_crash():
         raise RuntimeError("CRITICAL_DATABASE_CRASH_SECRET_12345")
 

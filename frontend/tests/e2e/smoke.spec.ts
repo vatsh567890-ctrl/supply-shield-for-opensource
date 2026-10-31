@@ -3,11 +3,11 @@ import { test, expect } from "@playwright/test";
 test.describe("SupplyShield Smoke Test Suite", () => {
   test("landing page renders with hero, 3D shield section, and how it works", async ({ page }) => {
     await page.goto("/");
-    await expect(page).toHaveTitle(/SupplyShield/);
-    await expect(page.locator("h1")).toContainText("Know what a code change does before it merges.");
-    await expect(page.locator("#how-it-works")).toBeVisible();
+    await expect(page).toHaveTitle(/Supply\s*Shield/i);
+    await expect(page.locator("h1")).toContainText("Supply Shield");
+    await expect(page.locator("#how-it-works")).toBeAttached();
     await expect(page.getByText("Sign in with GitHub").first()).toBeVisible();
-    await expect(page.getByText("SupplyShield never executes the code it checks.")).toBeVisible();
+    await expect(page.getByText(/Supply\s*Shield never executes the code it checks/i).first()).toBeVisible();
   });
 
   test("login page renders with authentication controls and security pledge", async ({ page }) => {

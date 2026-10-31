@@ -109,15 +109,18 @@ async def test_shadow_mode_fail_safe_on_error(
 
     # Force model loader to raise an exception
     with (
-        patch("app.worker.pipeline.load_verified_model", side_effect=RuntimeError("Simulated Model Failure")),
+        patch(
+            "app.worker.pipeline.load_verified_model",
+            side_effect=RuntimeError("Simulated Model Failure"),
+        ),
         patch("app.worker.pipeline.get_settings", return_value=Settings(ML_MODE="shadow")),
     ):
         result = await execute_pipeline(
-                analysis_id=analysis_id,
-                session=mock_session,
-                diff_data=sample_diff,
-                findings=sample_findings,
-            )
+            analysis_id=analysis_id,
+            session=mock_session,
+            diff_data=sample_diff,
+            findings=sample_findings,
+        )
 
     # Pipeline must not crash, verdict must be intact, and ml_shadow must be None
     assert result["score"] == 80

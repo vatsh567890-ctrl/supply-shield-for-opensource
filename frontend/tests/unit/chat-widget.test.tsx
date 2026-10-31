@@ -15,6 +15,7 @@ describe("ChatWidget", () => {
   beforeEach(() => {
     vi.clearAllMocks();
     mockPathname.mockReturnValue("/overview");
+    process.env.NEXT_PUBLIC_SHOW_CHAT = "true";
   });
 
   it("renders floating chat button and toggles open/close", () => {

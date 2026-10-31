@@ -16,19 +16,20 @@ class Settings(BaseSettings):
         extra="forbid",
     )
 
-    APP_ENV: Literal["development", "production"] = "development"
+    APP_ENV: Literal["development", "production"] = "production"
+    ALLOW_MOCK_AUTH: bool = False
     FRONTEND_ORIGIN: str = "http://localhost:3000"
     DATABASE_URL: str = "postgresql+psycopg://supplyshield:supplyshield@localhost:5432/supplyshield"
     REDIS_URL: str = "redis://localhost:6379/0"
-    SESSION_SECRET: str = "dev_session_secret_for_scaffold_testing_only_32_bytes_min"
+    SESSION_SECRET: str | None = None
 
     GITHUB_APP_ID: str = "0"
     GITHUB_APP_PRIVATE_KEY_PATH: str | None = None
     GITHUB_APP_PRIVATE_KEY: str | None = None
-    GITHUB_APP_WEBHOOK_SECRET: str = "dev_webhook_secret"
+    GITHUB_APP_WEBHOOK_SECRET: str | None = None
 
-    GITHUB_OAUTH_CLIENT_ID: str = "mock_client_id"
-    GITHUB_OAUTH_CLIENT_SECRET: str = "mock_client_secret"
+    GITHUB_OAUTH_CLIENT_ID: str | None = None
+    GITHUB_OAUTH_CLIENT_SECRET: str | None = None
     GITHUB_OAUTH_REDIRECT_URI: str = "http://localhost:3000/api/auth/github/callback"
 
     LLM_PROVIDER: Literal["gemini", "anthropic", "none"] = "none"
@@ -45,7 +46,7 @@ class Settings(BaseSettings):
     LOG_LEVEL: str = Field(default="INFO")
     CHAT_LOG_TEXT: bool = False
     NEXT_PUBLIC_USE_MOCKS: bool = False
-    ML_MODE: Literal["off", "shadow", "active"] = "shadow"
+    ML_MODE: Literal["off", "shadow", "active"] = "off"
 
     @field_validator("ML_MODE")
     @classmethod
@@ -102,3 +103,32 @@ def check_missing_config(settings: Settings | None = None) -> list[str]:
         missing.append("LLM_API_KEY")
 
     return missing
+
+
+def validate_startup_config(settings: Settings | None = None) -> None:
+    """Validate application configuration at startup, enforcing secure-by-default rules.
+
+    - In production: refuses to run if ALLOW_MOCK_AUTH is True.
+    - In production: refuses to run if required secrets/configs are missing (names variables, never values).
+    - In development: logs warnings naming any missing variables.
+    """
+    import logging
+
+    s = settings or get_settings()
+
+    # Rule 1: Fail closed on mock auth in production
+    if s.APP_ENV == "production" and s.ALLOW_MOCK_AUTH:
+        raise RuntimeError(
+            "Startup refused: ALLOW_MOCK_AUTH=true is strictly forbidden when APP_ENV is production."
+        )
+
+    missing = check_missing_config(s)
+    if missing:
+        if s.APP_ENV == "production":
+            raise RuntimeError(
+                f"Missing required production configuration variables: {', '.join(missing)}"
+            )
+        logging.getLogger("app.config").warning(
+            "Missing or empty Section 12 configuration variables: %s",
+            ", ".join(missing),
+        )

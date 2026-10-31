@@ -13,10 +13,11 @@ class RequestIdMiddleware(BaseHTTPMiddleware):
     async def dispatch(self, request: Request, call_next: RequestResponseEndpoint) -> Response:
         incoming_id = request.headers.get("X-Request-ID")
         # Validate incoming ID or generate a new UUID
-        request_id = incoming_id.strip() if incoming_id and incoming_id.strip() else str(uuid.uuid4())
+        request_id = (
+            incoming_id.strip() if incoming_id and incoming_id.strip() else str(uuid.uuid4())
+        )
         request.state.request_id = request_id
 
         response = await call_next(request)
         response.headers["X-Request-ID"] = request_id
         return response
-

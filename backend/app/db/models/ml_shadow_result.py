@@ -53,4 +53,3 @@ class MLShadowResult(Base):
         nullable=False,
         server_default=func.now(),
     )
-

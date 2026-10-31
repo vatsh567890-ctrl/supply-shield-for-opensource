@@ -17,30 +17,38 @@ def _build_request(headers: dict[str, str]) -> Request:
 
 
 def test_csrf_passes_with_valid_header_and_origin():
-    req = _build_request({
-        "X-SupplyShield-Request": "1",
-        "Origin": "http://localhost:3000",
-    })
+    req = _build_request(
+        {
+            "X-SupplyShield-Request": "1",
+            "Origin": "http://localhost:3000",
+        }
+    )
     assert verify_csrf(req, "http://localhost:3000") is True
 
 
 def test_csrf_rejects_missing_custom_header():
-    req = _build_request({
-        "Origin": "http://localhost:3000",
-    })
+    req = _build_request(
+        {
+            "Origin": "http://localhost:3000",
+        }
+    )
     assert verify_csrf(req, "http://localhost:3000") is False
 
 
 def test_csrf_rejects_missing_origin():
-    req = _build_request({
-        "X-SupplyShield-Request": "1",
-    })
+    req = _build_request(
+        {
+            "X-SupplyShield-Request": "1",
+        }
+    )
     assert verify_csrf(req, "http://localhost:3000") is False
 
 
 def test_csrf_rejects_mismatched_origin():
-    req = _build_request({
-        "X-SupplyShield-Request": "1",
-        "Origin": "https://attacker.example.com",
-    })
+    req = _build_request(
+        {
+            "X-SupplyShield-Request": "1",
+            "Origin": "https://attacker.example.com",
+        }
+    )
     assert verify_csrf(req, "http://localhost:3000") is False

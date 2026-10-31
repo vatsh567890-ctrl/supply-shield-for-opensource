@@ -41,4 +41,3 @@ class ChatResponse(BaseModel):
         ...,
         description="Status of the AI system: ok, disabled, or unavailable.",
     )
-

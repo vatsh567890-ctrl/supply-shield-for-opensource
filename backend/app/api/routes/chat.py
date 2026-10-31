@@ -1,6 +1,5 @@
 """AI Help Chatbot route handling."""
 
-import hashlib
 from uuid import UUID
 
 from fastapi import APIRouter, Request
@@ -20,8 +19,11 @@ def _get_authenticated_user_id(request: Request) -> UUID:
     """Resolve authenticated user ID from session or demo cookie.
 
     Enforces that mock dev sessions are strictly forbidden in production
-    and when NEXT_PUBLIC_USE_MOCKS is False. The mock session cookie is never
+    and when ALLOW_MOCK_AUTH is False. The mock session cookie is never
     a valid database session.
+
+    Real sessions must be looked up in the session store. Until Phase 2
+    is built, real sessions are rejected with UNAUTHENTICATED.
     """
     settings = get_settings()
     session_cookie = request.cookies.get("ss_session")
@@ -33,20 +35,13 @@ def _get_authenticated_user_id(request: Request) -> UUID:
     # Handle mock dev session tokens
     is_mock_cookie = (session_cookie == "mock-dev-session") or (demo_cookie == "1")
     if is_mock_cookie:
-        # Strictly reject mock session when in production or when mock mode is disabled
-        if settings.APP_ENV == "production" or not settings.NEXT_PUBLIC_USE_MOCKS:
+        # Strictly reject mock session unless in development with mock auth enabled
+        if settings.APP_ENV != "development" or not settings.ALLOW_MOCK_AUTH:
             raise UnauthenticatedError("Invalid or expired session")
         return MOCK_USER_ID
 
-    # Real database session tokens are parsed or looked up in the session store.
-    # The mock cookie 'mock-dev-session' is never treated as a valid database session.
-    if session_cookie:
-        try:
-            return UUID(session_cookie)
-        except ValueError:
-            h = hashlib.sha256(session_cookie.encode("utf-8")).digest()
-            return UUID(bytes=h[:16])
-
+    # Real database sessions must be looked up in the session store.
+    # Until Phase 2 is built, all real sessions are rejected with UNAUTHENTICATED.
     raise UnauthenticatedError("Authentication required")
 
 
@@ -72,4 +67,3 @@ async def post_chat(
         message=payload.message,
         verdict_id=payload.verdict_id,
     )
-

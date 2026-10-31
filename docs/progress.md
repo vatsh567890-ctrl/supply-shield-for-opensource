@@ -2,9 +2,19 @@
 
 ## Project Status
 
-- **Current Phase**: Frontend Completed ("Shield Glass" Security UI & Full Test Suites)
-- **Architecture & Design**: Fully Aligned with `docs/design.md` and Design System in `components/ui`
-- **Backend Architecture**: Phase 0 Scaffold & Specifications Verified
+- **Frontend**: Functional UI console in mock mode ("Shield Glass" theme, 18 test suites passing).
+- **Backend Architecture**: Phase 0 Scaffold & Specifications Verified.
+- **Backend Implementation Honesty**: 57 modules under `backend/app/` are currently Phase 0 stubs raising `NotImplementedError` (e.g., analyzer rules, webhook verification, worker pipeline, DB repos). Module status is tracked in `docs/status.md` and enforced by CI.
+- **ML Model Status**: **Unvalidated, do not use for decisions.** Trained on synthetic data; default `ML_MODE=off`.
+
+---
+
+## Configuration Deviations from Section 12
+
+### `ALLOW_MOCK_AUTH`
+- **Type**: `bool`
+- **Default**: `False`
+- **Justification**: Enforces fail-closed security for mock credentials. Mock sessions (`mock-dev-session` or demo cookie) are only accepted when `ALLOW_MOCK_AUTH=true` AND `APP_ENV=development`. If `APP_ENV=production` and `ALLOW_MOCK_AUTH=true`, the application startup immediately refuses to run. Default `APP_ENV` is `production`.
 
 ---
 

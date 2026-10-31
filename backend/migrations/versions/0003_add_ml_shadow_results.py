@@ -47,4 +47,3 @@ def downgrade() -> None:
     """Drop ml_shadow_results table."""
     op.drop_index("ix_ml_shadow_results_analysis_id", table_name="ml_shadow_results")
     op.drop_table("ml_shadow_results")
-

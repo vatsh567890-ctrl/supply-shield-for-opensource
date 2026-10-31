@@ -50,4 +50,3 @@ class MLShadowRepository:
         )
         res = await self.session.execute(stmt)
         return list(res.scalars().all())
-

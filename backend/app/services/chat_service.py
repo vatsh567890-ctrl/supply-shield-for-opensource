@@ -62,9 +62,7 @@ class ChatService:
             if verdict_ctx is None:
                 raise NotFoundError("Resource not found")
 
-            has_access = await self.access_service.require_repo_access(
-                user_id, verdict_ctx.repo_id
-            )
+            has_access = await self.access_service.require_repo_access(user_id, verdict_ctx.repo_id)
             if not has_access:
                 # Return NOT_FOUND so verdict existence is not revealed
                 raise NotFoundError("Resource not found")
@@ -167,8 +165,5 @@ class ChatService:
                 f"- Findings:\n{findings_summary or 'None'}\n"
             )
 
-        prompt_parts.append(
-            f"<user_message untrusted=\"true\">\n{message}\n</user_message>"
-        )
+        prompt_parts.append(f'<user_message untrusted="true">\n{message}\n</user_message>')
         return "\n\n".join(prompt_parts)
-

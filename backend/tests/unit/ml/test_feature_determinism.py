@@ -38,4 +38,3 @@ def test_repeated_runs_produce_identical_feature_vectors() -> None:
         assert current_vector == baseline_vector, (
             f"Feature divergence on iteration {run_idx}: {current_vector} != {baseline_vector}"
         )
-

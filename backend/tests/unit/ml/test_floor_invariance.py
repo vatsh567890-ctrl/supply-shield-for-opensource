@@ -44,29 +44,61 @@ def test_all_floors_enforced() -> None:
     """Verify each specified security floor from docs/scoring.md."""
     # 1. Install hook + new network host -> Floor 80
     f1 = [
-        Finding(rule_id="install_hook_added", severity=Severity.HIGH, weight=25, message="", file_path=""),
-        Finding(rule_id="network_new_host", severity=Severity.HIGH, weight=20, message="", file_path=""),
+        Finding(
+            rule_id="install_hook_added",
+            severity=Severity.HIGH,
+            weight=25,
+            message="",
+            file_path="",
+        ),
+        Finding(
+            rule_id="network_new_host", severity=Severity.HIGH, weight=20, message="", file_path=""
+        ),
     ]
     assert calculate_score(f1)[3] == 80
 
     # 2. Install hook + secret env read -> Floor 80
     f2 = [
-        Finding(rule_id="install_hook_added", severity=Severity.HIGH, weight=25, message="", file_path=""),
-        Finding(rule_id="secret_env_read", severity=Severity.HIGH, weight=20, message="", file_path=""),
+        Finding(
+            rule_id="install_hook_added",
+            severity=Severity.HIGH,
+            weight=25,
+            message="",
+            file_path="",
+        ),
+        Finding(
+            rule_id="secret_env_read", severity=Severity.HIGH, weight=20, message="", file_path=""
+        ),
     ]
     assert calculate_score(f2)[3] == 80
 
     # 3. Install hook + encoded payload -> Floor 75
     f3 = [
-        Finding(rule_id="install_hook_added", severity=Severity.HIGH, weight=25, message="", file_path=""),
-        Finding(rule_id="encoded_payload", severity=Severity.HIGH, weight=15, message="", file_path=""),
+        Finding(
+            rule_id="install_hook_added",
+            severity=Severity.HIGH,
+            weight=25,
+            message="",
+            file_path="",
+        ),
+        Finding(
+            rule_id="encoded_payload", severity=Severity.HIGH, weight=15, message="", file_path=""
+        ),
     ]
     assert calculate_score(f3)[3] == 75
 
     # 4. Install hook + binary added -> Floor 75
     f4 = [
-        Finding(rule_id="install_hook_added", severity=Severity.HIGH, weight=25, message="", file_path=""),
-        Finding(rule_id="binary_added", severity=Severity.HIGH, weight=15, message="", file_path=""),
+        Finding(
+            rule_id="install_hook_added",
+            severity=Severity.HIGH,
+            weight=25,
+            message="",
+            file_path="",
+        ),
+        Finding(
+            rule_id="binary_added", severity=Severity.HIGH, weight=15, message="", file_path=""
+        ),
     ]
     assert calculate_score(f4)[3] == 75
 
@@ -78,8 +110,19 @@ def test_all_floors_enforced() -> None:
 
     # 6. Provenance dropped + install hook -> Floor 70
     f6 = [
-        Finding(rule_id="install_hook_added", severity=Severity.HIGH, weight=25, message="", file_path=""),
-        Finding(rule_id="provenance_dropped", severity=Severity.HIGH, weight=20, message="", file_path=""),
+        Finding(
+            rule_id="install_hook_added",
+            severity=Severity.HIGH,
+            weight=25,
+            message="",
+            file_path="",
+        ),
+        Finding(
+            rule_id="provenance_dropped",
+            severity=Severity.HIGH,
+            weight=20,
+            message="",
+            file_path="",
+        ),
     ]
     assert calculate_score(f6)[3] == 70
-
