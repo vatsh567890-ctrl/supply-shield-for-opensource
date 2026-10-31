@@ -48,14 +48,14 @@ export default function ReposPage() {
       {/* Page Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#7CF5FF]/10 border border-[#7CF5FF]/30 text-[#7CF5FF] text-xs font-mono mb-2">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#FAF4F6] border border-[#F0DCE2] text-[#B8556B] text-xs font-mono mb-2">
             <FolderGit2 className="w-3.5 h-3.5" />
             <span>Repository Perimeter</span>
           </div>
-          <h1 className="font-display text-3xl font-extrabold text-white tracking-tight">
+          <h1 className="font-display text-3xl font-bold text-[#1E1A1C] tracking-tight">
             Monitored Repositories
           </h1>
-          <p className="text-sm text-[#A39EC8] mt-1">
+          <p className="text-sm text-[#6E6268] mt-1">
             Active repositories guarded by SupplyShield pre-merge webhooks.
           </p>
         </div>
@@ -69,10 +69,10 @@ export default function ReposPage() {
       </div>
 
       {/* Control Bar: Search, Level Filters, Grid/Table Toggle */}
-      <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4 p-4 rounded-2xl bg-white/[0.03] border border-[rgba(138,132,196,0.2)] backdrop-blur-xl">
+      <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4 p-4 rounded-xl bg-white border border-[#F0DCE2] shadow-[0_1px_2px_rgba(30,26,28,0.04)]">
         {/* Search */}
         <div className="relative flex-1 max-w-md">
-          <Search className="w-4 h-4 text-[#8A84C4] absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+          <Search className="w-4 h-4 text-[#6E6268] absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
           <Input
             value={search}
             onChange={(e) => setSearch(e.target.value)}
@@ -84,7 +84,7 @@ export default function ReposPage() {
         {/* Level Filters & Layout Toggle */}
         <div className="flex flex-wrap items-center justify-between md:justify-end gap-3">
           {/* Level Filter Buttons */}
-          <div className="flex items-center gap-1.5 p-1 rounded-xl bg-white/[0.04] border border-white/[0.06]">
+          <div className="flex items-center gap-1.5 p-1 rounded-xl bg-[#FAF4F6] border border-[#F0DCE2]">
             {["ALL", "HIGH", "MEDIUM", "LOW"].map((level) => {
               const active = levelFilter === level;
               return (
@@ -93,8 +93,8 @@ export default function ReposPage() {
                   onClick={() => setLevelFilter(level)}
                   className={`px-3 py-1 rounded-lg text-xs font-mono font-medium transition-colors cursor-pointer ${
                     active
-                      ? "bg-[#2D2A6E] text-[#7CF5FF] border border-[#6C63FF]/50 shadow-sm"
-                      : "text-[#8A84C4] hover:text-white"
+                      ? "bg-white text-[#B8556B] border border-[#F0DCE2] shadow-sm"
+                      : "text-[#6E6268] hover:text-[#1E1A1C]"
                   }`}
                 >
                   {level}
@@ -104,14 +104,14 @@ export default function ReposPage() {
           </div>
 
           {/* Grid vs Table Toggle */}
-          <div className="flex items-center gap-1 p-1 rounded-xl bg-white/[0.04] border border-white/[0.06]">
+          <div className="flex items-center gap-1 p-1 rounded-xl bg-[#FAF4F6] border border-[#F0DCE2]">
             <button
               onClick={() => setViewMode("grid")}
               aria-label="Grid view"
               className={`p-1.5 rounded-lg transition-colors cursor-pointer ${
                 viewMode === "grid"
-                  ? "bg-[#2D2A6E] text-[#7CF5FF] border border-[#6C63FF]/50"
-                  : "text-[#8A84C4] hover:text-white"
+                  ? "bg-white text-[#B8556B] border border-[#F0DCE2] shadow-sm"
+                  : "text-[#6E6268] hover:text-[#1E1A1C]"
               }`}
             >
               <LayoutGrid className="w-4 h-4" />
@@ -121,8 +121,8 @@ export default function ReposPage() {
               aria-label="Table view"
               className={`p-1.5 rounded-lg transition-colors cursor-pointer ${
                 viewMode === "table"
-                  ? "bg-[#2D2A6E] text-[#7CF5FF] border border-[#6C63FF]/50"
-                  : "text-[#8A84C4] hover:text-white"
+                  ? "bg-white text-[#B8556B] border border-[#F0DCE2] shadow-sm"
+                  : "text-[#6E6268] hover:text-[#1E1A1C]"
               }`}
             >
               <List className="w-4 h-4" />
@@ -171,23 +171,23 @@ export default function ReposPage() {
                     {/* Header: Name and Branch */}
                     <div className="flex items-start justify-between gap-2 mb-3">
                       <div>
-                        <span className="text-[11px] font-mono text-[#8A84C4] block">
+                        <span className="text-[11px] font-mono text-[#6E6268] block">
                           {repo.owner}
                         </span>
-                        <h3 className="font-display text-lg font-bold text-white group-hover:text-[#7CF5FF] transition-colors truncate">
+                        <h3 className="font-display text-lg font-bold text-[#1E1A1C] group-hover:text-[#B8556B] transition-colors truncate">
                           {repo.name}
                         </h3>
                       </div>
-                      <span className="px-2 py-0.5 rounded-md bg-white/[0.04] border border-white/[0.08] text-[10px] font-mono text-[#A39EC8] flex items-center gap-1 shrink-0">
+                      <span className="px-2 py-0.5 rounded-md bg-[#FAF4F6] border border-[#F0DCE2] text-[10px] font-mono text-[#6E6268] flex items-center gap-1 shrink-0">
                         <GitBranch className="w-3 h-3" />
                         {repo.default_branch}
                       </span>
                     </div>
 
                     {/* Risk Badge and Score */}
-                    <div className="flex items-center justify-between mt-4 py-2 border-y border-white/[0.06]">
+                    <div className="flex items-center justify-between mt-4 py-2 border-y border-[#F0DCE2]">
                       <Badge level={riskLevel}>{riskLevel} RISK</Badge>
-                      <span className="font-display text-base font-extrabold text-white">
+                      <span className="font-display text-base font-extrabold text-[#1E1A1C]">
                         {repo.latest_score !== null ? `${repo.latest_score}/100` : "No score"}
                       </span>
                     </div>
@@ -196,7 +196,7 @@ export default function ReposPage() {
                   {/* Sparkline & Last Analyzed Footer */}
                   <div className="pt-4 mt-4 flex items-center justify-between">
                     <div>
-                      <span className="text-[10px] font-mono text-[#8A84C4] block">
+                      <span className="text-[10px] font-mono text-[#6E6268] block">
                         Recent 7-Day Trend
                       </span>
                       <Sparkline
@@ -212,10 +212,10 @@ export default function ReposPage() {
                     </div>
 
                     <div className="text-right">
-                      <span className="text-[10px] font-mono text-[#8A84C4] block">
+                      <span className="text-[10px] font-mono text-[#6E6268] block">
                         Last Analyzed
                       </span>
-                      <span className="text-xs text-[#D1CEE5] flex items-center gap-1 justify-end font-mono">
+                      <span className="text-xs text-[#6E6268] flex items-center gap-1 justify-end font-mono">
                         <Clock className="w-3 h-3" />
                         {formatRelativeTime(repo.last_analyzed_at)}
                       </span>
@@ -247,9 +247,9 @@ export default function ReposPage() {
                   <TableCell>
                     <Link
                       href={`/repos/${repo.owner}/${repo.name}`}
-                      className="group font-medium text-white hover:text-[#7CF5FF] transition-colors"
+                      className="group font-medium text-[#1E1A1C] hover:text-[#B8556B] transition-colors"
                     >
-                      <span className="text-xs text-[#8A84C4] block font-mono">
+                      <span className="text-xs text-[#6E6268] block font-mono">
                         {repo.owner} /
                       </span>
                       <span className="text-sm font-bold font-display">
@@ -261,7 +261,7 @@ export default function ReposPage() {
                     <Badge level={riskLevel}>{riskLevel}</Badge>
                   </TableCell>
                   <TableCell>
-                    <span className="font-display font-bold text-white text-sm">
+                    <span className="font-display font-bold text-[#1E1A1C] text-sm">
                       {repo.latest_score !== null ? `${repo.latest_score}/100` : "N/A"}
                     </span>
                   </TableCell>
@@ -277,7 +277,7 @@ export default function ReposPage() {
                       }
                     />
                   </TableCell>
-                  <TableCell className="font-mono text-xs text-[#A39EC8]">
+                  <TableCell className="font-mono text-xs text-[#6E6268]">
                     {formatRelativeTime(repo.last_analyzed_at)}
                   </TableCell>
                   <TableCell className="text-right">

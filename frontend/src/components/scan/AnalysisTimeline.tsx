@@ -35,7 +35,7 @@ export const AnalysisTimeline: React.FC<AnalysisTimelineProps> = ({
   activeStepIndex = 0,
 }) => {
   return (
-    <div className="relative pl-6 space-y-6 before:absolute before:left-3 before:top-2 before:bottom-2 before:w-0.5 before:bg-white/[0.08]">
+    <div className="relative pl-6 space-y-6 before:absolute before:left-3 before:top-2 before:bottom-2 before:w-0.5 before:bg-[#F0DCE2]">
       {TIMELINE_STEPS.map((step, idx) => {
         const isCompleted =
           status === "succeeded" || (status === "running" && idx < activeStepIndex);
@@ -49,10 +49,10 @@ export const AnalysisTimeline: React.FC<AnalysisTimelineProps> = ({
             <div
               className={`absolute -left-6 w-6 h-6 rounded-full flex items-center justify-center transition-all ${
                 isCompleted
-                  ? "bg-[#34D399] text-[#0A0920] shadow-[0_0_12px_rgba(52,211,153,0.5)]"
+                  ? "bg-[#2F7D5B] text-white"
                   : isCurrent
-                  ? "bg-[#2D2A6E] border-2 border-[#7CF5FF] text-[#7CF5FF] shadow-[0_0_12px_rgba(124,245,255,0.6)]"
-                  : "bg-white/[0.04] border border-white/[0.1] text-[#716C9B]"
+                  ? "bg-[#FAF4F6] border-2 border-[#B8556B] text-[#B8556B]"
+                  : "bg-white border border-[#F0DCE2] text-[#6E6268]"
               }`}
             >
               {isCompleted ? (
@@ -69,16 +69,16 @@ export const AnalysisTimeline: React.FC<AnalysisTimelineProps> = ({
               <span
                 className={`text-sm font-medium tracking-wide transition-colors ${
                   isCompleted
-                    ? "text-white font-semibold"
+                    ? "text-[#1E1A1C] font-semibold"
                     : isCurrent
-                    ? "text-[#7CF5FF] font-bold"
-                    : "text-[#716C9B]"
+                    ? "text-[#B8556B] font-bold"
+                    : "text-[#6E6268]"
                 }`}
               >
                 {step}
               </span>
               {isCurrent && (
-                <span className="block text-[11px] font-mono text-[#8A84C4] mt-0.5">
+                <span className="block text-[11px] font-mono text-[#6E6268] mt-0.5">
                   In progress...
                 </span>
               )}

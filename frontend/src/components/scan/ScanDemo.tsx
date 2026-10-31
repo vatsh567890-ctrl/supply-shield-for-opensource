@@ -67,20 +67,20 @@ export const ScanDemo: React.FC<{ className?: string }> = ({ className = "" }) =
 
   return (
     <div
-      className={`rounded-3xl bg-[#0D0B26]/90 border border-[rgba(138,132,196,0.3)] shadow-[0_20px_50px_rgba(0,0,0,0.6),0_0_30px_rgba(108,99,255,0.15)] overflow-hidden backdrop-blur-2xl ${className}`}
+      className={`rounded-[12px] bg-white border border-[#F0DCE2] shadow-[0_1px_2px_rgba(30,26,28,0.04)] overflow-hidden ${className}`}
     >
       {/* PR Card Header */}
-      <div className="px-6 py-4 border-b border-[rgba(138,132,196,0.2)] bg-white/[0.02] flex flex-wrap items-center justify-between gap-3">
+      <div className="px-6 py-4 border-b border-[#F0DCE2] bg-white flex flex-wrap items-center justify-between gap-3">
         <div className="flex items-center gap-3">
-          <div className="p-2 rounded-xl bg-[#2D2A6E]/60 border border-[#6C63FF]/30 text-[#7CF5FF]">
+          <div className="p-2 rounded-xl bg-[#FAF4F6] border border-[#F0DCE2] text-[#B8556B]">
             <GitPullRequest className="w-5 h-5" />
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <span className="font-mono text-xs text-[#8A84C4]">acme-corp/cloud-infra-orchestrator</span>
-              <span className="text-white/40 font-mono text-xs">#142</span>
+              <span className="font-mono text-xs text-[#6E6268]">acme-corp/cloud-infra-orchestrator</span>
+              <span className="text-[#6E6268] font-mono text-xs">#142</span>
             </div>
-            <p className="text-sm font-semibold text-white mt-0.5">
+            <p className="text-sm font-semibold text-[#1E1A1C] mt-0.5">
               chore(deps): upgrade dependencies & telemetry
             </p>
           </div>
@@ -96,12 +96,12 @@ export const ScanDemo: React.FC<{ className?: string }> = ({ className = "" }) =
       </div>
 
       {/* Main Body: Terminal Stream & Verdict Gauge */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-0 divide-y lg:divide-y-0 lg:divide-x divide-[rgba(138,132,196,0.2)]">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-0 divide-y lg:divide-y-0 lg:divide-x divide-[#F0DCE2]">
         {/* Terminal log stream (Left 7 cols) */}
-        <div className="lg:col-span-7 p-5 sm:p-6 bg-black/30 font-mono text-xs flex flex-col justify-between min-h-[280px]">
+        <div className="lg:col-span-7 p-5 sm:p-6 bg-[#FAF4F6]/50 font-mono text-xs flex flex-col justify-between min-h-[280px]">
           <div>
-            <div className="flex items-center gap-2 pb-3 mb-3 border-b border-white/[0.06] text-[#8A84C4]">
-              <Terminal className="w-4 h-4 text-[#7CF5FF]" />
+            <div className="flex items-center gap-2 pb-3 mb-3 border-b border-[#F0DCE2] text-[#6E6268]">
+              <Terminal className="w-4 h-4 text-[#B8556B]" />
               <span className="text-[11px] uppercase tracking-wider">Analysis Stream (Worker: runner-04)</span>
             </div>
 
@@ -111,13 +111,13 @@ export const ScanDemo: React.FC<{ className?: string }> = ({ className = "" }) =
                   key={idx}
                   className={`flex items-start gap-2.5 leading-relaxed animate-in fade-in slide-in-from-left-2 duration-300 ${
                     line.crit
-                      ? "text-[#F43F5E] font-semibold"
+                      ? "text-[#A3213F] font-semibold"
                       : line.warn
-                      ? "text-[#FBBF24]"
-                      : "text-[#D1CEE5]"
+                      ? "text-[#9A6410]"
+                      : "text-[#1E1A1C]"
                   }`}
                 >
-                  <span className="text-[#8A84C4] select-none shrink-0 font-mono">
+                  <span className="text-[#6E6268] select-none shrink-0 font-mono">
                     {`00:${(idx * 2 + 1).toString().padStart(2, "0")}`}
                   </span>
                   <span className="break-all">{line.text}</span>
@@ -125,17 +125,17 @@ export const ScanDemo: React.FC<{ className?: string }> = ({ className = "" }) =
               ))}
 
               {currentStep < LOG_LINES.length && (
-                <div className="flex items-center gap-2 text-[#7CF5FF] pt-1">
-                  <span className="w-2 h-2 rounded-full bg-[#7CF5FF] animate-live-pulse" />
+                <div className="flex items-center gap-2 text-[#B8556B] pt-1">
+                  <span className="w-2 h-2 rounded-full bg-[#B8556B] animate-live-pulse" />
                   <span className="text-[11px] animate-pulse">Running static rules & taint analysis...</span>
                 </div>
               )}
             </div>
           </div>
 
-          <div className="mt-4 pt-3 border-t border-white/[0.06] flex items-center justify-between text-[11px] text-[#8A84C4]">
+          <div className="mt-4 pt-3 border-t border-[#F0DCE2] flex items-center justify-between text-[11px] text-[#6E6268]">
             <span className="flex items-center gap-1.5">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#34D399]" />
+              <span className="w-1.5 h-1.5 rounded-full bg-[#2F7D5B]" />
               Zero code execution sandbox
             </span>
             <span>SHA: e3b0c44...</span>
@@ -143,31 +143,31 @@ export const ScanDemo: React.FC<{ className?: string }> = ({ className = "" }) =
         </div>
 
         {/* Verdict & Gauge Result (Right 5 cols) */}
-        <div className="lg:col-span-5 p-6 bg-white/[0.01] flex flex-col items-center justify-center text-center">
+        <div className="lg:col-span-5 p-6 bg-white flex flex-col items-center justify-center text-center">
           {showVerdict ? (
             <div className="flex flex-col items-center animate-in zoom-in-95 duration-500">
               <RiskGauge score={92} level="HIGH" size={170} />
 
               <div className="mt-4 text-center">
-                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#F43F5E]/15 border border-[#F43F5E]/40 text-[#F43F5E] text-xs font-bold">
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#A3213F]/15 border border-[#A3213F]/40 text-[#A3213F] text-xs font-bold">
                   <AlertOctagon className="w-3.5 h-3.5" />
                   Merge blocked by SupplyShield
                 </div>
-                <p className="text-xs text-[#A39EC8] mt-2 max-w-[220px]">
+                <p className="text-xs text-[#6E6268] mt-2 max-w-[220px]">
                   Postinstall script credential theft attempt detected
                 </p>
               </div>
             </div>
           ) : (
             <div className="py-8 flex flex-col items-center justify-center">
-              <div className="relative w-32 h-32 rounded-full border-2 border-dashed border-[#6C63FF]/40 flex items-center justify-center animate-spin" style={{ animationDuration: "14s" }}>
-                <div className="w-24 h-24 rounded-full border-2 border-[#7CF5FF]/50 border-t-transparent animate-spin" style={{ animationDuration: "2s" }} />
+              <div className="relative w-32 h-32 rounded-full border-2 border-dashed border-[#B8556B]/30 flex items-center justify-center animate-spin" style={{ animationDuration: "14s" }}>
+                <div className="w-24 h-24 rounded-full border-2 border-[#B8556B] border-t-transparent animate-spin" style={{ animationDuration: "2s" }} />
               </div>
               <div className="mt-4 text-center">
-                <p className="text-xs font-mono uppercase tracking-widest text-[#7CF5FF]">
+                <p className="text-xs font-mono uppercase tracking-widest text-[#B8556B]">
                   Aggregating Risk Scores
                 </p>
-                <p className="text-xs text-[#8A84C4] mt-1">Analyzing dependencies...</p>
+                <p className="text-xs text-[#6E6268] mt-1">Analyzing dependencies...</p>
               </div>
             </div>
           )}
