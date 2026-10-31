@@ -424,11 +424,11 @@ async def test_mock_cookie_rejected_when_mock_auth_not_explicitly_enabled():
 
 @pytest.mark.asyncio
 async def test_mock_cookie_rejected_when_app_env_production():
-    """Mock session cookie must be rejected with 401 when APP_ENV=production even if ALLOW_MOCK_AUTH is set."""
+    """Mock session cookie must be rejected with 401 when APP_ENV=production even if ALLOW_MOCK_AUTH is set to true."""
     settings = get_settings()
     with (
         patch.object(settings, "APP_ENV", "production"),
-        patch.object(settings, "ALLOW_MOCK_AUTH", False),
+        patch.object(settings, "ALLOW_MOCK_AUTH", True),
     ):
         transport = ASGITransport(app=app, raise_app_exceptions=False)
         async with AsyncClient(
