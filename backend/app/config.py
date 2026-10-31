@@ -105,11 +105,55 @@ def check_missing_config(settings: Settings | None = None) -> list[str]:
     return missing
 
 
+def check_insecure_dev_config(settings: Settings | None = None) -> list[str]:
+    """Identify required secrets that equal known development/placeholder values.
+
+    Returns variable names only, never revealing sensitive values.
+    """
+    s = settings or get_settings()
+    insecure: list[str] = []
+
+    dev_placeholders = {
+        "generate-with-openssl-rand-hex-32",
+        "your-github-app-webhook-secret",
+        "your-github-oauth-client-secret",
+        "your-github-oauth-client-id",
+        "your-github-app-id",
+        "dev-secret",
+        "dev_session_secret_change_me_to_random_32_bytes_in_production",
+        "dev_webhook_secret_change_in_prod",
+        "mock_client_id",
+        "mock_client_secret",
+        "development-secret",
+        "mock-secret",
+        "change-me",
+        "changeme",
+        "dev",
+        "test",
+    }
+
+    secret_attrs = [
+        "SESSION_SECRET",
+        "GITHUB_APP_WEBHOOK_SECRET",
+        "GITHUB_OAUTH_CLIENT_SECRET",
+        "GITHUB_OAUTH_CLIENT_ID",
+        "GITHUB_APP_ID",
+        "GITHUB_APP_PRIVATE_KEY",
+    ]
+    for attr in secret_attrs:
+        val = getattr(s, attr, None)
+        if val is not None and isinstance(val, str) and val.strip().lower() in dev_placeholders:
+            insecure.append(attr)
+
+    return insecure
+
+
 def validate_startup_config(settings: Settings | None = None) -> None:
     """Validate application configuration at startup, enforcing secure-by-default rules.
 
     - In production: refuses to run if ALLOW_MOCK_AUTH is True.
     - In production: refuses to run if required secrets/configs are missing (names variables, never values).
+    - In production: refuses to run if any required secret equals a known development value.
     - In development: logs warnings naming any missing variables.
     """
     import logging
@@ -120,6 +164,13 @@ def validate_startup_config(settings: Settings | None = None) -> None:
     if s.APP_ENV == "production" and s.ALLOW_MOCK_AUTH:
         raise RuntimeError(
             "Startup refused: ALLOW_MOCK_AUTH=true is strictly forbidden when APP_ENV is production."
+        )
+
+    # Rule 2: Insecure dev values in production
+    insecure = check_insecure_dev_config(s)
+    if insecure and s.APP_ENV == "production":
+        raise RuntimeError(
+            f"Startup refused: Insecure development values detected in production for variables: {', '.join(insecure)}"
         )
 
     missing = check_missing_config(s)
