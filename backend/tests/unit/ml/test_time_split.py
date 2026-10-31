@@ -6,11 +6,9 @@ from pathlib import Path
 
 def test_time_split_disjoint_packages_and_ordering() -> None:
     """Verify that no package appears in both train and test, and splits are chronological."""
-    root_dir = Path(__file__).resolve().parent.parent.parent.parent.parent
-    dataset_dir = root_dir / "ml" / "dataset"
+    dataset_dir = Path(__file__).resolve().parents[3] / "app" / "ml" / "dataset"
     if not dataset_dir.exists():
-        # Fallback if run from backend/
-        dataset_dir = Path(__file__).resolve().parent.parent.parent.parent / "ml" / "dataset"
+        dataset_dir = Path(__file__).resolve().parents[4] / "ml" / "dataset"
 
     train_path = dataset_dir / "train.jsonl"
     val_path = dataset_dir / "val.jsonl"
