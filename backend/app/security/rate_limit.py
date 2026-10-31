@@ -9,8 +9,21 @@ _memory_cache: dict[str, tuple[int, float]] = {}
 
 
 def reset_rate_limits() -> None:
-    """Clear in-memory rate limit counters (used in testing)."""
+    """Clear in-memory and Redis rate limit counters (used in testing)."""
     _memory_cache.clear()
+    try:
+        import redis
+
+        settings = get_settings()
+        client = redis.Redis.from_url(
+            settings.REDIS_URL,
+            socket_connect_timeout=0.2,
+            socket_timeout=0.2,
+        )
+        client.flushdb()
+        client.close()
+    except Exception:
+        pass
 
 
 async def check_rate_limit(key: str, limit: int, window_seconds: int) -> tuple[bool, int]:
