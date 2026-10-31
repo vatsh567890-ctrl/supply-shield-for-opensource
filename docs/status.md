@@ -5,8 +5,8 @@
 
 ## Summary Metrics
 
-- **Total Modules Scanned**: 133
-- **Complete Modules**: 76
+- **Total Modules Scanned**: 137
+- **Complete Modules**: 80
 - **Stub / In Progress Modules**: 57
 - **Total `NotImplementedError` Occurrences**: 75
 
@@ -122,6 +122,10 @@ CI verifies this via `python scripts/check_module_status.py`.
 | `backend/app/llm/truncation.py` | Stub (In Progress) | 1 |
 | `backend/app/logging.py` | **Complete** | 0 |
 | `backend/app/main.py` | Stub (In Progress) | 1 |
+| `backend/app/ml/__init__.py` | **Complete** | 0 |
+| `backend/app/ml/features.py` | **Complete** | 0 |
+| `backend/app/ml/model_loader.py` | **Complete** | 0 |
+| `backend/app/ml/train.py` | **Complete** | 0 |
 | `backend/app/queue/__init__.py` | **Complete** | 0 |
 | `backend/app/queue/connection.py` | **Complete** | 0 |
 | `backend/app/queue/jobs.py` | **Complete** | 0 |
