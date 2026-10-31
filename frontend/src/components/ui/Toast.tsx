@@ -79,20 +79,20 @@ export const ToastProvider: React.FC<{ children: React.ReactNode }> = ({
         {toasts.map((t) => {
           const typeStyles = {
             success:
-              "border-[#34D399]/40 bg-[#0E0C2B]/95 text-white shadow-[0_4px_24px_rgba(52,211,153,0.2)]",
+              "border-[#2F7D5B]/30 bg-white text-[#1E1A1C] shadow-[0_4px_24px_rgba(30,26,28,0.08)]",
             error:
-              "border-[#F43F5E]/40 bg-[#0E0C2B]/95 text-white shadow-[0_4px_24px_rgba(244,63,94,0.2)]",
+              "border-[#A3213F]/30 bg-white text-[#1E1A1C] shadow-[0_4px_24px_rgba(30,26,28,0.08)]",
             warning:
-              "border-[#FBBF24]/40 bg-[#0E0C2B]/95 text-white shadow-[0_4px_24px_rgba(251,191,36,0.2)]",
+              "border-[#9A6410]/30 bg-white text-[#1E1A1C] shadow-[0_4px_24px_rgba(30,26,28,0.08)]",
             info:
-              "border-[#6C63FF]/40 bg-[#0E0C2B]/95 text-white shadow-[0_4px_24px_rgba(108,99,255,0.2)]",
+              "border-[#F0DCE2] bg-white text-[#1E1A1C] shadow-[0_4px_24px_rgba(30,26,28,0.08)]",
           };
 
           const icon = {
-            success: <CheckCircle2 className="w-5 h-5 text-[#34D399] shrink-0" />,
-            error: <AlertOctagon className="w-5 h-5 text-[#F43F5E] shrink-0" />,
-            warning: <AlertTriangle className="w-5 h-5 text-[#FBBF24] shrink-0" />,
-            info: <Info className="w-5 h-5 text-[#7CF5FF] shrink-0" />,
+            success: <CheckCircle2 className="w-5 h-5 text-[#2F7D5B] shrink-0" />,
+            error: <AlertOctagon className="w-5 h-5 text-[#A3213F] shrink-0" />,
+            warning: <AlertTriangle className="w-5 h-5 text-[#9A6410] shrink-0" />,
+            info: <Info className="w-5 h-5 text-[#B8556B] shrink-0" />,
           }[t.type];
 
           return (
@@ -104,7 +104,7 @@ export const ToastProvider: React.FC<{ children: React.ReactNode }> = ({
               <div className="flex-1 min-w-0">
                 <p className="text-sm font-semibold tracking-tight">{t.title}</p>
                 {t.message && (
-                  <p className="text-xs text-[#A39EC8] mt-0.5 leading-relaxed">
+                  <p className="text-xs text-[#6E6268] mt-0.5 leading-relaxed">
                     {t.message}
                   </p>
                 )}
@@ -112,7 +112,7 @@ export const ToastProvider: React.FC<{ children: React.ReactNode }> = ({
               <button
                 onClick={() => removeToast(t.id)}
                 aria-label="Dismiss notification"
-                className="p-1 rounded-lg text-[#A39EC8] hover:text-white transition-colors"
+                className="p-1 rounded-lg text-[#6E6268] hover:text-[#1E1A1C] transition-colors"
               >
                 <X className="w-4 h-4" />
               </button>

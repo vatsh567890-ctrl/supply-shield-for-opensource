@@ -22,11 +22,11 @@ export const RiskGauge: React.FC<RiskGaugeProps> = ({
   const resolvedLevel: "LOW" | "MEDIUM" | "HIGH" =
     level || (score >= 70 ? "HIGH" : score >= 30 ? "MEDIUM" : "LOW");
 
-  // Colors
+  // Colors matching docs/design.md
   const colorMap = {
-    LOW: "#34D399",
-    MEDIUM: "#FBBF24",
-    HIGH: "#F43F5E",
+    LOW: "#2F7D5B",
+    MEDIUM: "#9A6410",
+    HIGH: "#A3213F",
   };
 
   const currentColor = colorMap[resolvedLevel];
@@ -124,7 +124,7 @@ export const RiskGauge: React.FC<RiskGaugeProps> = ({
             cx={size / 2}
             cy={size / 2}
             r={radius}
-            stroke="rgba(138, 132, 196, 0.15)"
+            stroke="#F0DCE2"
             strokeWidth={strokeWidth}
             fill="transparent"
           />
@@ -141,17 +141,16 @@ export const RiskGauge: React.FC<RiskGaugeProps> = ({
             fill="transparent"
             style={{
               transition: "stroke-dashoffset 0.8s cubic-bezier(0.16, 1, 0.3, 1), stroke 0.5s ease",
-              filter: `drop-shadow(0 0 8px ${currentColor}80)`,
             }}
           />
         </svg>
 
         {/* Inner score presentation */}
         <div className="absolute inset-0 flex flex-col items-center justify-center text-center select-none">
-          <span className="font-display text-4xl sm:text-5xl font-extrabold tracking-tight text-white drop-shadow-md">
+          <span className="font-display text-4xl sm:text-5xl font-extrabold tracking-tight text-[#1E1A1C]">
             {displayScore}
           </span>
-          <span className="text-[11px] font-mono uppercase tracking-widest text-[#A39EC8] mt-0.5">
+          <span className="text-[11px] font-mono uppercase tracking-widest text-[#6E6268] mt-0.5">
             / 100
           </span>
         </div>
@@ -160,12 +159,11 @@ export const RiskGauge: React.FC<RiskGaugeProps> = ({
       {showDetails && (
         <div className="mt-4 flex flex-col items-center">
           <div
-            className="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold tracking-wider uppercase border backdrop-blur-md"
+            className="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold tracking-wider uppercase border"
             style={{
               color: currentColor,
-              borderColor: `${currentColor}60`,
-              backgroundColor: `${currentColor}18`,
-              boxShadow: `0 0 16px -2px ${currentColor}40`,
+              borderColor: `${currentColor}40`,
+              backgroundColor: `${currentColor}15`,
             }}
           >
             {getRiskIcon()}

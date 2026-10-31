@@ -11,8 +11,7 @@ export const HeroShield: React.FC<{ className?: string }> = ({
       aria-hidden="true"
     >
       {/* Outer ambient glow */}
-      <div className="absolute w-64 h-64 rounded-full bg-[#6C63FF]/25 blur-3xl" />
-      <div className="absolute w-48 h-48 rounded-full bg-[#7CF5FF]/20 blur-2xl animate-live-pulse" />
+      <div className="absolute w-64 h-64 rounded-full bg-[#B8556B]/10 blur-3xl" />
 
       {/* SVG Shield Graphics */}
       <svg
@@ -26,23 +25,22 @@ export const HeroShield: React.FC<{ className?: string }> = ({
         <defs>
           {/* Main Shield Gradient */}
           <linearGradient id="shieldGrad" x1="20" y1="20" x2="260" y2="300" gradientUnits="userSpaceOnUse">
-            <stop offset="0%" stopColor="#6C63FF" stopOpacity="0.4" />
-            <stop offset="50%" stopColor="#2D2A6E" stopOpacity="0.8" />
-            <stop offset="100%" stopColor="#0A0920" stopOpacity="0.95" />
+            <stop offset="0%" stopColor="#FFFFFF" stopOpacity="0.9" />
+            <stop offset="50%" stopColor="#FAF4F6" stopOpacity="0.8" />
+            <stop offset="100%" stopColor="#FBE4EA" stopOpacity="0.95" />
           </linearGradient>
 
           {/* Border Glow Gradient */}
           <linearGradient id="shieldBorder" x1="0" y1="0" x2="280" y2="320" gradientUnits="userSpaceOnUse">
-            <stop offset="0%" stopColor="#7CF5FF" stopOpacity="0.9" />
-            <stop offset="30%" stopColor="#6C63FF" stopOpacity="0.6" />
-            <stop offset="70%" stopColor="#8A84C4" stopOpacity="0.4" />
-            <stop offset="100%" stopColor="#7CF5FF" stopOpacity="0.8" />
+            <stop offset="0%" stopColor="#B8556B" stopOpacity="0.8" />
+            <stop offset="50%" stopColor="#F0DCE2" stopOpacity="0.9" />
+            <stop offset="100%" stopColor="#B8556B" stopOpacity="0.6" />
           </linearGradient>
 
           {/* Core Emblem Gradient */}
           <linearGradient id="emblemGrad" x1="80" y1="80" x2="200" y2="240" gradientUnits="userSpaceOnUse">
-            <stop offset="0%" stopColor="#7CF5FF" />
-            <stop offset="100%" stopColor="#6C63FF" />
+            <stop offset="0%" stopColor="#B8556B" />
+            <stop offset="100%" stopColor="#A2485C" />
           </linearGradient>
 
           <filter id="neonGlow" x="-20%" y="-20%" width="140%" height="140%">
@@ -75,15 +73,15 @@ export const HeroShield: React.FC<{ className?: string }> = ({
         />
 
         {/* Central Luminous Node / Emblem */}
-        <g filter="url(#neonGlow)">
+        <g>
           {/* Circuit nodes */}
           <circle cx="140" cy="140" r="14" fill="url(#emblemGrad)" />
-          <circle cx="140" cy="140" r="24" stroke="#7CF5FF" strokeWidth="1.5" strokeDasharray="4 4" opacity="0.6" />
+          <circle cx="140" cy="140" r="24" stroke="#B8556B" strokeWidth="1.5" strokeDasharray="4 4" opacity="0.6" />
 
           {/* Secure check / lock glyph lines */}
           <path
             d="M133 140 L138 145 L148 135"
-            stroke="#0A0920"
+            stroke="#FFFFFF"
             strokeWidth="3"
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -91,16 +89,16 @@ export const HeroShield: React.FC<{ className?: string }> = ({
         </g>
 
         {/* Radar scan trace rays */}
-        <line x1="140" y1="55" x2="140" y2="105" stroke="#7CF5FF" strokeWidth="1.5" opacity="0.7" strokeDasharray="2 3" />
-        <line x1="140" y1="175" x2="140" y2="235" stroke="#7CF5FF" strokeWidth="1.5" opacity="0.5" strokeDasharray="2 3" />
-        <line x1="85" y1="140" x2="110" y2="140" stroke="#7CF5FF" strokeWidth="1.5" opacity="0.5" strokeDasharray="2 3" />
-        <line x1="170" y1="140" x2="195" y2="140" stroke="#7CF5FF" strokeWidth="1.5" opacity="0.5" strokeDasharray="2 3" />
+        <line x1="140" y1="55" x2="140" y2="105" stroke="#B8556B" strokeWidth="1.5" opacity="0.7" strokeDasharray="2 3" />
+        <line x1="140" y1="175" x2="140" y2="235" stroke="#B8556B" strokeWidth="1.5" opacity="0.5" strokeDasharray="2 3" />
+        <line x1="85" y1="140" x2="110" y2="140" stroke="#B8556B" strokeWidth="1.5" opacity="0.5" strokeDasharray="2 3" />
+        <line x1="170" y1="140" x2="195" y2="140" stroke="#B8556B" strokeWidth="1.5" opacity="0.5" strokeDasharray="2 3" />
 
         {/* Satellite pulse markers */}
-        <circle cx="140" cy="55" r="3" fill="#7CF5FF" />
-        <circle cx="140" cy="235" r="3" fill="#6C63FF" />
-        <circle cx="85" cy="140" r="3" fill="#7CF5FF" />
-        <circle cx="195" cy="140" r="3" fill="#6C63FF" />
+        <circle cx="140" cy="55" r="3" fill="#B8556B" />
+        <circle cx="140" cy="235" r="3" fill="#B8556B" />
+        <circle cx="85" cy="140" r="3" fill="#B8556B" />
+        <circle cx="195" cy="140" r="3" fill="#B8556B" />
       </svg>
     </div>
   );

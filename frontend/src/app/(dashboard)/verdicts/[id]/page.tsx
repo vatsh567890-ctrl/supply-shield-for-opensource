@@ -147,7 +147,7 @@ export default function VerdictDetailPage({
       <div>
         <Link
           href="/overview"
-          className="inline-flex items-center gap-1.5 text-xs text-[#8A84C4] hover:text-[#7CF5FF] transition-colors mb-3 font-mono"
+          className="inline-flex items-center gap-1.5 text-xs text-[#6E6268] hover:text-[#B8556B] transition-colors mb-3 font-mono"
         >
           <ArrowLeft className="w-3.5 h-3.5" />
           <span>Back to Overview</span>
@@ -156,16 +156,16 @@ export default function VerdictDetailPage({
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
             <div className="flex items-center gap-2">
-              <span className="text-xs font-mono text-[#8A84C4]">
+              <span className="text-xs font-mono text-[#6E6268]">
                 Verdict ID: {id}
               </span>
-              <span className="text-white/30">•</span>
-              <span className="text-xs font-mono text-[#7CF5FF]">
+              <span className="text-[#6E6268]/40">•</span>
+              <span className="text-xs font-mono text-[#B8556B]">
                 {formatRelativeTime(verdict.created_at)}
               </span>
             </div>
-            <h1 className="font-display text-3xl font-extrabold text-white tracking-tight mt-0.5">
-              Threat Assessment & Verdict Details
+            <h1 className="font-display text-3xl font-bold text-[#1E1A1C] tracking-tight mt-0.5">
+              Threat Assessment &amp; Verdict Details
             </h1>
           </div>
 
@@ -177,7 +177,7 @@ export default function VerdictDetailPage({
                 rel="noopener noreferrer"
               >
                 <Button variant="secondary" size="md">
-                  <GitPullRequest className="w-4 h-4 mr-2 text-[#7CF5FF]" />
+                  <GitPullRequest className="w-4 h-4 mr-2 text-[#B8556B]" />
                   <span>View on GitHub</span>
                   <ExternalLink className="w-3.5 h-3.5 ml-1.5 opacity-70" />
                 </Button>
@@ -213,12 +213,12 @@ export default function VerdictDetailPage({
                 <Badge level={verdict.level}>{verdict.level} TIER</Badge>
                 <span
                   data-testid="hero-ai-status-badge"
-                  className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-mono font-medium border backdrop-blur-md ${
+                  className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-mono font-medium border ${
                     verdict.ai_status === "ok"
-                      ? "bg-[#7CF5FF]/15 text-[#7CF5FF] border-[#7CF5FF]/40 shadow-[0_0_12px_rgba(124,245,255,0.2)]"
+                      ? "bg-[#B8556B]/15 text-[#B8556B] border-[#B8556B]/40"
                       : verdict.ai_status === "disabled"
-                      ? "bg-white/[0.06] text-[#A39EC8] border-[rgba(138,132,196,0.3)]"
-                      : "bg-[#FBBF24]/15 text-[#FBBF24] border-[#FBBF24]/40 shadow-[0_0_12px_rgba(251,191,36,0.2)]"
+                      ? "bg-[#FAF4F6] text-[#6E6268] border-[#F0DCE2]"
+                      : "bg-[#9A6410]/15 text-[#9A6410] border-[#9A6410]/40"
                   }`}
                 >
                   {verdict.ai_status === "ok"
@@ -230,16 +230,16 @@ export default function VerdictDetailPage({
               </div>
 
               {/* Breakdown metrics */}
-              <div className="w-full mt-6 pt-6 border-t border-white/[0.08] space-y-2.5 text-xs font-mono">
-                <div className="flex items-center justify-between text-[#A39EC8]">
+              <div className="w-full mt-6 pt-6 border-t border-[#F0DCE2] space-y-2.5 text-xs font-mono">
+                <div className="flex items-center justify-between text-[#6E6268]">
                   <span>Static AST Score:</span>
-                  <span className="text-white font-bold">
+                  <span className="text-[#1E1A1C] font-bold">
                     {verdict.rule_score}
                   </span>
                 </div>
-                <div className="flex items-center justify-between text-[#A39EC8]">
+                <div className="flex items-center justify-between text-[#6E6268]">
                   <span>LLM Adjustment:</span>
-                  <span className="text-[#7CF5FF] font-bold">
+                  <span className="text-[#B8556B] font-bold">
                     {verdict.llm_adjustment >= 0
                       ? `+${verdict.llm_adjustment}`
                       : verdict.llm_adjustment}
@@ -247,9 +247,9 @@ export default function VerdictDetailPage({
                 </div>
                 {verdict.floor_applied !== null &&
                   verdict.floor_applied !== undefined && (
-                    <div className="flex items-center justify-between text-[#A39EC8]">
+                    <div className="flex items-center justify-between text-[#6E6268]">
                       <span>Floor Baseline:</span>
-                      <span className="text-[#FBBF24] font-bold">
+                      <span className="text-[#9A6410] font-bold">
                         {verdict.floor_applied}
                       </span>
                     </div>
@@ -257,7 +257,7 @@ export default function VerdictDetailPage({
               </div>
             </div>
 
-            <div className="mt-6 pt-4 border-t border-white/[0.06] text-[11px] font-mono text-[#8A84C4] text-center">
+            <div className="mt-6 pt-4 border-t border-[#F0DCE2] text-[11px] font-mono text-[#6E6268] text-center">
               Deterministic AST Rules • Taint Analysis Verification
             </div>
           </SpotlightCard>
@@ -286,10 +286,10 @@ export default function VerdictDetailPage({
       {verdict.diff_files && verdict.diff_files.length > 0 && (
         <div className="space-y-3">
           <div className="flex items-center justify-between">
-            <h2 className="font-display text-xl font-bold text-white tracking-tight">
+            <h2 className="font-display text-xl font-bold text-[#1E1A1C] tracking-tight">
               Package Diff Inspection
             </h2>
-            <span className="text-xs font-mono text-[#8A84C4]">
+            <span className="text-xs font-mono text-[#6E6268]">
               {verdict.diff_files.length} Modified File
               {verdict.diff_files.length !== 1 ? "s" : ""}
             </span>
@@ -302,14 +302,14 @@ export default function VerdictDetailPage({
       <div className="space-y-4">
         <div className="flex items-center justify-between">
           <div>
-            <h2 className="font-display text-xl font-bold text-white tracking-tight">
-              Security Findings & AST Evidence
+            <h2 className="font-display text-xl font-bold text-[#1E1A1C] tracking-tight">
+              Security Findings &amp; AST Evidence
             </h2>
-            <p className="text-xs text-[#A39EC8] mt-0.5">
+            <p className="text-xs text-[#6E6268] mt-0.5">
               Code references grouped by dependency package and target file
             </p>
           </div>
-          <span className="text-xs font-mono text-[#8A84C4]">
+          <span className="text-xs font-mono text-[#6E6268]">
             {verdict.findings.length} Finding
             {verdict.findings.length !== 1 ? "s" : ""}
           </span>
@@ -319,12 +319,12 @@ export default function VerdictDetailPage({
       </div>
 
       {/* Override History Section */}
-      <div className="space-y-4 pt-6 border-t border-white/[0.08]">
+      <div className="space-y-4 pt-6 border-t border-[#F0DCE2]">
         <div>
-          <h2 className="font-display text-xl font-bold text-white tracking-tight">
+          <h2 className="font-display text-xl font-bold text-[#1E1A1C] tracking-tight">
             Security Override History
           </h2>
-          <p className="text-xs text-[#A39EC8] mt-0.5">
+          <p className="text-xs text-[#6E6268] mt-0.5">
             Audit log of manual clearances and confirmed blocks
           </p>
         </div>

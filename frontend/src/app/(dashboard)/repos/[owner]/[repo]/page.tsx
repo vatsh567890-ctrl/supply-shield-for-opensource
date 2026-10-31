@@ -82,7 +82,7 @@ export default function RepoDetailPage({
       <div>
         <Link
           href="/repos"
-          className="inline-flex items-center gap-1.5 text-xs text-[#8A84C4] hover:text-[#7CF5FF] transition-colors mb-3 font-mono"
+          className="inline-flex items-center gap-1.5 text-xs text-[#6E6268] hover:text-[#B8556B] transition-colors mb-3 font-mono"
         >
           <ArrowLeft className="w-3.5 h-3.5" />
           <span>Back to Repositories</span>
@@ -91,15 +91,15 @@ export default function RepoDetailPage({
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
             <div className="flex items-center gap-2">
-              <span className="text-xs font-mono text-[#8A84C4]">{owner} /</span>
-              <span className="px-2 py-0.5 rounded-full bg-[#34D399]/15 border border-[#34D399]/30 text-[#34D399] text-[10px] font-mono">
+              <span className="text-xs font-mono text-[#6E6268]">{owner} /</span>
+              <span className="px-2 py-0.5 rounded-full bg-[#2F7D5B]/15 border border-[#2F7D5B]/30 text-[#2F7D5B] text-[10px] font-mono">
                 Active Check Runs
               </span>
             </div>
-            <h1 className="font-display text-3xl font-extrabold text-white tracking-tight mt-0.5">
+            <h1 className="font-display text-3xl font-bold text-[#1E1A1C] tracking-tight mt-0.5">
               {repo}
             </h1>
-            <p className="text-sm text-[#A39EC8] mt-1">
+            <p className="text-sm text-[#6E6268] mt-1">
               Historical verdicts, taint analysis logs, and 30-day supply chain risk trends.
             </p>
           </div>
@@ -115,21 +115,21 @@ export default function RepoDetailPage({
 
       {/* 30-Day Trend Chart Card */}
       <SpotlightCard className="p-6 sm:p-8">
-        <div className="flex items-center justify-between mb-6 pb-4 border-b border-white/[0.08]">
+        <div className="flex items-center justify-between mb-6 pb-4 border-b border-[#F0DCE2]">
           <div className="flex items-center gap-2.5">
-            <div className="p-2 rounded-xl bg-[#2D2A6E] border border-[#6C63FF]/40 text-[#7CF5FF]">
+            <div className="p-2 rounded-xl bg-[#FAF4F6] border border-[#F0DCE2] text-[#B8556B]">
               <TrendingUp className="w-4 h-4" />
             </div>
             <div>
-              <h2 className="font-display text-lg font-bold text-white">
+              <h2 className="font-display text-lg font-bold text-[#1E1A1C]">
                 30-Day Risk Trajectory
               </h2>
-              <span className="text-xs text-[#8A84C4]">
+              <span className="text-xs text-[#6E6268]">
                 Daily peak threat score calculated from dependency manifests
               </span>
             </div>
           </div>
-          <span className="text-xs font-mono text-[#7CF5FF]">Daily Ingestion</span>
+          <span className="text-xs font-mono text-[#B8556B]">Daily Ingestion</span>
         </div>
 
         {isLoading ? (
@@ -137,7 +137,7 @@ export default function RepoDetailPage({
         ) : chartPoints.length > 0 ? (
           <TrendAreaChart data={chartPoints} />
         ) : (
-          <div className="h-48 flex items-center justify-center text-xs text-[#8A84C4]">
+          <div className="h-48 flex items-center justify-center text-xs text-[#6E6268]">
             No telemetry recorded in the last 30 days.
           </div>
         )}
@@ -148,16 +148,16 @@ export default function RepoDetailPage({
         {/* Table Controls */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div>
-            <h2 className="font-display text-xl font-bold text-white tracking-tight">
+            <h2 className="font-display text-xl font-bold text-[#1E1A1C] tracking-tight">
               Verdict History
             </h2>
-            <p className="text-xs text-[#A39EC8] mt-0.5">
+            <p className="text-xs text-[#6E6268] mt-0.5">
               Pull request evaluations and automated status decisions
             </p>
           </div>
 
           {/* Level Filter Buttons */}
-          <div className="flex items-center gap-1.5 p-1 rounded-xl bg-white/[0.04] border border-white/[0.06] shrink-0">
+          <div className="flex items-center gap-1.5 p-1 rounded-xl bg-[#FAF4F6] border border-[#F0DCE2] shrink-0">
             {["ALL", "HIGH", "MEDIUM", "LOW"].map((level) => {
               const active = levelFilter === level;
               return (
@@ -169,8 +169,8 @@ export default function RepoDetailPage({
                   }}
                   className={`px-3 py-1 rounded-lg text-xs font-mono font-medium transition-colors cursor-pointer ${
                     active
-                      ? "bg-[#2D2A6E] text-[#7CF5FF] border border-[#6C63FF]/50 shadow-sm"
-                      : "text-[#8A84C4] hover:text-white"
+                      ? "bg-white text-[#B8556B] border border-[#F0DCE2] shadow-sm"
+                      : "text-[#6E6268] hover:text-[#1E1A1C]"
                   }`}
                 >
                   {level}
@@ -218,18 +218,18 @@ export default function RepoDetailPage({
                       <Badge level={verdict.level}>{verdict.level}</Badge>
                     </TableCell>
                     <TableCell>
-                      <span className="font-display font-bold text-white text-sm">
+                      <span className="font-display font-bold text-[#1E1A1C] text-sm">
                         {verdict.score}/100
                       </span>
                     </TableCell>
                     <TableCell className="max-w-md">
-                      <p className="text-xs text-[#D1CEE5] line-clamp-2 leading-relaxed">
+                      <p className="text-xs text-[#1E1A1C] line-clamp-2 leading-relaxed">
                         {verdict.intent_summary ||
                           verdict.plain_english_explanation ||
                           "Static rules completed successfully."}
                       </p>
                     </TableCell>
-                    <TableCell className="font-mono text-xs text-[#A39EC8]">
+                    <TableCell className="font-mono text-xs text-[#6E6268]">
                       {formatRelativeTime(verdict.created_at)}
                     </TableCell>
                     <TableCell className="text-right">
