@@ -85,4 +85,3 @@ def load_verified_model(models_dir: Path | str | None = None) -> tuple[Any, Any,
         raise ModelSecurityError(f"Failed to deserialize verified artifacts: {exc}") from exc
 
     return model, scaler, manifest
-

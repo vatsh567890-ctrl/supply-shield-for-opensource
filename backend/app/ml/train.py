@@ -151,9 +151,13 @@ def train_and_evaluate() -> dict[str, Any]:
     X_val, y_val, val_records = load_split("val")
     X_test, y_test, test_records = load_split("test")
 
-    print(f"Train samples: {len(y_train)} (Pos: {np.sum(y_train)}, Neg: {len(y_train)-np.sum(y_train)})")
-    print(f"Val samples:   {len(y_val)} (Pos: {np.sum(y_val)}, Neg: {len(y_val)-np.sum(y_val)})")
-    print(f"Test samples:  {len(y_test)} (Pos: {np.sum(y_test)}, Neg: {len(y_test)-np.sum(y_test)})")
+    print(
+        f"Train samples: {len(y_train)} (Pos: {np.sum(y_train)}, Neg: {len(y_train) - np.sum(y_train)})"
+    )
+    print(f"Val samples:   {len(y_val)} (Pos: {np.sum(y_val)}, Neg: {len(y_val) - np.sum(y_val)})")
+    print(
+        f"Test samples:  {len(y_test)} (Pos: {np.sum(y_test)}, Neg: {len(y_test) - np.sum(y_test)})"
+    )
 
     # Featurization Ordering: Fit scaler STRICTLY on train
     scaler = StandardScaler()
@@ -169,7 +173,9 @@ def train_and_evaluate() -> dict[str, Any]:
     base_preds = (base_probs >= 0.5).astype(int)
     base_pr_auc = average_precision_score(y_test, base_probs)
     base_roc_auc = roc_auc_score(y_test, base_probs)
-    print(f"Baseline PR-AUC: {base_pr_auc:.4f}, ROC-AUC: {base_roc_auc:.4f}, F1: {f1_score(y_test, base_preds):.4f}")
+    print(
+        f"Baseline PR-AUC: {base_pr_auc:.4f}, ROC-AUC: {base_roc_auc:.4f}, F1: {f1_score(y_test, base_preds):.4f}"
+    )
 
     # 2. Main Model: LightGBM
     print("\n--- Training Main Model (LightGBM) ---")
@@ -203,7 +209,7 @@ def train_and_evaluate() -> dict[str, Any]:
     brier = brier_score_loss(y_test, test_probs)
 
     # False Positive Rate on benign packages in test set
-    benign_mask = (y_test == 0)
+    benign_mask = y_test == 0
     fp_count = int(np.sum((test_preds == 1) & benign_mask))
     total_benign = int(np.sum(benign_mask))
     fpr_benign = float(fp_count / total_benign) if total_benign > 0 else 0.0
@@ -229,6 +235,7 @@ def train_and_evaluate() -> dict[str, Any]:
     # 5. SHAP Explanations
     print("\n--- Computing SHAP TreeExplainer Attributions ---")
     import shap
+
     explainer = shap.TreeExplainer(main_model)
     shap_values = explainer.shap_values(X_test_scaled)
     # Binary classification SHAP values handling (may be array of shape (N, D) or list)
@@ -239,10 +246,12 @@ def train_and_evaluate() -> dict[str, Any]:
     top_feature_indices = np.argsort(mean_abs_shap)[::-1]
     top_10_features: list[dict[str, Any]] = []
     for idx in top_feature_indices[:10]:
-        top_10_features.append({
-            "feature": FEATURE_NAMES[idx],
-            "importance": float(round(mean_abs_shap[idx], 4)),
-        })
+        top_10_features.append(
+            {
+                "feature": FEATURE_NAMES[idx],
+                "importance": float(round(mean_abs_shap[idx], 4)),
+            }
+        )
     print("Top 10 Global Features (SHAP):")
     for item in top_10_features:
         print(f"  {item['feature']:<30}: {item['importance']:.4f}")
@@ -270,11 +279,13 @@ def train_and_evaluate() -> dict[str, Any]:
         sorted_feats = np.argsort(np.abs(case_shap))[::-1]
         top_contribs = []
         for fi in sorted_feats[:5]:
-            top_contribs.append({
-                "feature": FEATURE_NAMES[fi],
-                "raw_value": float(X_test[idx][fi]),
-                "shap_value": float(round(case_shap[fi], 4)),
-            })
+            top_contribs.append(
+                {
+                    "feature": FEATURE_NAMES[fi],
+                    "raw_value": float(X_test[idx][fi]),
+                    "shap_value": float(round(case_shap[fi], 4)),
+                }
+            )
         return {
             "case_type": case_type,
             "package_name": record["package_name"],
@@ -423,4 +434,3 @@ def train_and_evaluate() -> dict[str, Any]:
 
 if __name__ == "__main__":
     train_and_evaluate()
-
