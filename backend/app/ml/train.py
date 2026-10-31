@@ -232,10 +232,7 @@ def train_and_evaluate() -> dict[str, Any]:
     explainer = shap.TreeExplainer(main_model)
     shap_values = explainer.shap_values(X_test_scaled)
     # Binary classification SHAP values handling (may be array of shape (N, D) or list)
-    if isinstance(shap_values, list):
-        shap_matrix = shap_values[1]  # positive class
-    else:
-        shap_matrix = shap_values
+    shap_matrix = shap_values[1] if isinstance(shap_values, list) else shap_values
 
     # Global feature importance (mean absolute SHAP)
     mean_abs_shap = np.mean(np.abs(shap_matrix), axis=0)
@@ -305,10 +302,7 @@ def train_and_evaluate() -> dict[str, Any]:
         edge_scaled = scaler.transform(edge_benign.reshape(1, -1))
         edge_prob = float(calibrated_model.predict_proba(edge_scaled)[0, 1])
         edge_shap = explainer.shap_values(edge_scaled)
-        if isinstance(edge_shap, list):
-            edge_shap_mat = edge_shap[1][0]
-        else:
-            edge_shap_mat = edge_shap[0]
+        edge_shap_mat = edge_shap[1][0] if isinstance(edge_shap, list) else edge_shap[0]
         sorted_fi = np.argsort(np.abs(edge_shap_mat))[::-1]
         case_explanations["false_positive"] = {
             "case_type": "False Positive (Boundary Stress Test)",
@@ -339,10 +333,7 @@ def train_and_evaluate() -> dict[str, Any]:
         stealth_scaled = scaler.transform(stealth_mal.reshape(1, -1))
         stealth_prob = float(calibrated_model.predict_proba(stealth_scaled)[0, 1])
         stealth_shap = explainer.shap_values(stealth_scaled)
-        if isinstance(stealth_shap, list):
-            stealth_shap_mat = stealth_shap[1][0]
-        else:
-            stealth_shap_mat = stealth_shap[0]
+        stealth_shap_mat = stealth_shap[1][0] if isinstance(edge_shap, list) else stealth_shap[0]
         sorted_fi = np.argsort(np.abs(stealth_shap_mat))[::-1]
         case_explanations["false_negative"] = {
             "case_type": "False Negative (Stealth Evasion Stress Test)",

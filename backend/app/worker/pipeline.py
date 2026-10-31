@@ -7,6 +7,8 @@ import time
 import uuid
 from typing import Any
 
+from sqlalchemy.ext.asyncio import AsyncSession
+
 from app.analyzer.models import Finding
 from app.analyzer.scoring import calculate_score
 from app.config import get_settings
@@ -32,13 +34,8 @@ async def run_ml_shadow(
 
     try:
         import numpy as np
-
-        try:
-            from app.ml.features import FEATURE_NAMES, extract_feature_vector
-            from app.ml.model_loader import load_verified_model
-        except ImportError:
-            from ml.features import FEATURE_NAMES, extract_feature_vector  # type: ignore[no-redef]
-            from ml.model_loader import load_verified_model  # type: ignore[no-redef]
+        from app.ml.features import FEATURE_NAMES, extract_feature_vector
+        from app.ml.model_loader import load_verified_model
     except Exception as import_err:
         logger.warning(
             "ML modules or dependencies not available (%s); continuing analysis without ML.",

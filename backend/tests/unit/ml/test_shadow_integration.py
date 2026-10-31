@@ -4,10 +4,10 @@ import uuid
 from unittest.mock import AsyncMock, MagicMock, patch
 
 import pytest
-from app.ml.features import PackageDiffData
 
 from app.analyzer.models import Finding, Severity
 from app.config import Settings
+from app.ml.features import PackageDiffData
 from app.worker.pipeline import execute_pipeline, run_ml_shadow
 
 

@@ -11,7 +11,7 @@ import json
 from pathlib import Path
 from typing import Any
 
-import joblib  # type: ignore[import-untyped]
+import joblib
 
 
 class ModelSecurityError(Exception):

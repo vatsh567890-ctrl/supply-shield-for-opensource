@@ -148,7 +148,7 @@ def load_top_packages(ecosystem: str) -> list[str]:
 
 def extract_features(diff: PackageDiffData) -> dict[str, float]:
     """Extract deterministic security risk features from package diff data."""
-    features: dict[str, float] = {name: 0.0 for name in FEATURE_NAMES}
+    features: dict[str, float] = dict.fromkeys(FEATURE_NAMES, 0.0)
 
     # 1. Install Hook Analysis (npm & PyPI)
     old_scripts = diff.old_manifest.get("scripts", {}) if isinstance(diff.old_manifest, dict) else {}
@@ -198,7 +198,7 @@ def extract_features(diff: PackageDiffData) -> dict[str, float]:
     long_line_files = 0
 
     # Old tree hosts
-    for fname, content in diff.old_files.items():
+    for content in diff.old_files.values():
         text = content.decode("utf-8", errors="ignore")
         for match in URL_PATTERN.finditer(text):
             old_hosts.add(match.group(1).lower())
@@ -276,16 +276,20 @@ def extract_features(diff: PackageDiffData) -> dict[str, float]:
     # 4. Dropped provenance flag
     prov_markers = [".provenance", ".sigstore", ".attestation", "slsa-provenance.json"]
     had_prov = any(any(m in k for m in prov_markers) for k in diff.old_files)
-    if isinstance(diff.old_manifest, dict):
-        if "publishConfig" in diff.old_manifest and isinstance(diff.old_manifest["publishConfig"], dict):
-            if diff.old_manifest["publishConfig"].get("provenance"):
-                had_prov = True
+    if (
+        isinstance(diff.old_manifest, dict)
+        and isinstance(diff.old_manifest.get("publishConfig"), dict)
+        and diff.old_manifest["publishConfig"].get("provenance")
+    ):
+        had_prov = True
 
     has_prov = any(any(m in k for m in prov_markers) for k in diff.new_files)
-    if isinstance(diff.new_manifest, dict):
-        if "publishConfig" in diff.new_manifest and isinstance(diff.new_manifest["publishConfig"], dict):
-            if diff.new_manifest["publishConfig"].get("provenance"):
-                has_prov = True
+    if (
+        isinstance(diff.new_manifest, dict)
+        and isinstance(diff.new_manifest.get("publishConfig"), dict)
+        and diff.new_manifest["publishConfig"].get("provenance")
+    ):
+        has_prov = True
 
     features["dropped_provenance_flag"] = 1.0 if (had_prov and not has_prov) else 0.0
 

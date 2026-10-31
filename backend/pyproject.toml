@@ -8,7 +8,8 @@ dependencies = [
     "uvicorn[standard]>=0.32.0",
     "pydantic>=2.9.0",
     "pydantic-settings>=2.6.0",
-    "sqlalchemy>=2.0.35",
+    "sqlalchemy[asyncio]>=2.0.35",
+    "greenlet>=3.0.0",
     "alembic>=1.13.3",
     "psycopg[binary]>=3.2.3",
     "redis>=5.2.0",
@@ -75,6 +76,10 @@ mypy_path = [".", ".."]
 [[tool.mypy.overrides]]
 module = ["app.security.*", "app.analyzer.*"]
 strict = true
+
+[[tool.mypy.overrides]]
+module = ["joblib.*", "sklearn.*", "lightgbm.*", "shap.*"]
+ignore_missing_imports = true
 
 [tool.pytest.ini_options]
 minversion = "8.0"
