@@ -1,6 +1,6 @@
 """Unit test verifying that feature extraction is strictly deterministic."""
 
-from ml.features import (
+from app.ml.features import (
     FEATURE_NAMES,
     PackageDiffData,
     extract_feature_vector,

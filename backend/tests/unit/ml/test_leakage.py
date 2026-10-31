@@ -1,6 +1,6 @@
 """Unit test for label leakage prevention."""
 
-from ml.features import (
+from app.ml.features import (
     FEATURE_NAMES,
     PackageDiffData,
     extract_features,
