@@ -16,6 +16,12 @@
   - Scaler: `28330bdf4d8a09b0c53130f6e157b918725ee71f3ad2102384d31708b12d8c92`
 - **Default Mode**: `ML_MODE=off` (runs strictly in shadow mode only when explicitly enabled).
 
+### Configuration Default: ML_MODE=off
+- In `backend/app/config.py`, the default configuration for `ML_MODE` is strictly `"off"`.
+- When `ML_MODE=off`, the worker pipeline completely bypasses model inference and logs a single sanitized informational line.
+- Shadow mode is activated only if `ML_MODE=shadow` is explicitly provided in the environment or `.env`.
+- Setting `ML_MODE=active` is forbidden and rejected at configuration startup.
+
 ---
 
 ## Synthetic Benchmark Metrics (Unvalidated)
