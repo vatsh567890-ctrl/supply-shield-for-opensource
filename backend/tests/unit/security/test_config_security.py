@@ -48,6 +48,30 @@ def test_production_fails_when_secrets_missing_and_names_variables_never_values(
     assert "None" not in err_msg
 
 
+def test_production_fails_when_secrets_equal_known_dev_values():
+    """In production, startup refuses to run if required secret equals a known dev placeholder."""
+    settings = Settings(
+        APP_ENV="production",
+        ALLOW_MOCK_AUTH=False,
+        SESSION_SECRET="generate-with-openssl-rand-hex-32",
+        GITHUB_APP_WEBHOOK_SECRET="your-github-app-webhook-secret",
+        GITHUB_OAUTH_CLIENT_ID="your-github-oauth-client-id",
+        GITHUB_OAUTH_CLIENT_SECRET="your-github-oauth-client-secret",
+        GITHUB_APP_ID="your-github-app-id",
+        GITHUB_APP_PRIVATE_KEY="real_prod_key_data",
+    )
+    with pytest.raises(RuntimeError) as exc_info:
+        validate_startup_config(settings)
+
+    err_msg = str(exc_info.value)
+    assert "Insecure development values detected in production for variables:" in err_msg
+    assert "SESSION_SECRET" in err_msg
+    assert "GITHUB_APP_WEBHOOK_SECRET" in err_msg
+    # Must name the variable, never print its value
+    assert "generate-with-openssl-rand-hex-32" not in err_msg
+    assert "your-github-app-webhook-secret" not in err_msg
+
+
 def test_development_logs_warning_for_missing_variables(caplog):
     """In development, missing variables log a warning naming the variables."""
     settings = Settings(

@@ -11,7 +11,7 @@ export const RepoTable: React.FC<{ repos: RepoSummaryResponse[] }> = ({
   return (
     <Table>
       <thead>
-        <tr className="border-b border-[#D6D3F0] text-slate-500 font-semibold text-xs uppercase">
+        <tr className="border-b border-[#F0DCE2] text-[#6E6268] font-semibold text-xs uppercase bg-[#FAF4F6]">
           <th className="py-3 px-4">Repository</th>
           <th className="py-3 px-4">Latest Risk</th>
           <th className="py-3 px-4">Score</th>
@@ -21,27 +21,27 @@ export const RepoTable: React.FC<{ repos: RepoSummaryResponse[] }> = ({
       </thead>
       <tbody>
         {repos.map((r) => (
-          <tr key={r.id} className="border-b border-slate-100 hover:bg-[#F8F9FC]">
-            <td className="py-3 px-4 font-medium text-[#2D2A6E]">
+          <tr key={r.id} className="border-b border-[#F0DCE2] hover:bg-[#FAF4F6] transition-colors">
+            <td className="py-3 px-4 font-medium text-[#1E1A1C]">
               {r.owner}/{r.name}
             </td>
             <td className="py-3 px-4">
               {r.latest_level ? (
                 <VerdictBadge level={r.latest_level as "LOW" | "MEDIUM" | "HIGH"} />
               ) : (
-                <span className="text-slate-400 text-xs">No scans</span>
+                <span className="text-[#6E6268] text-xs">No scans</span>
               )}
             </td>
-            <td className="py-3 px-4 font-mono font-medium">
+            <td className="py-3 px-4 font-mono font-medium text-[#1E1A1C]">
               {r.latest_score !== null ? r.latest_score : "—"}
             </td>
-            <td className="py-3 px-4 text-slate-500 text-xs">
+            <td className="py-3 px-4 text-[#6E6268] text-xs">
               {r.last_analyzed_at ? formatDate(r.last_analyzed_at) : "Never"}
             </td>
             <td className="py-3 px-4 text-right">
               <Link
                 href={`/repos/${r.owner}/${r.name}`}
-                className="text-xs text-[#2D2A6E] font-semibold hover:underline"
+                className="text-xs text-[#B8556B] font-semibold hover:underline"
               >
                 View History
               </Link>

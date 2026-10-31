@@ -104,10 +104,10 @@ export default function DashboardLayout({
 
   if (isLoading && !isDemoMode) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-[#0A0920] text-white">
+      <div className="min-h-screen flex items-center justify-center bg-transparent text-[#1E1A1C]">
         <div className="flex flex-col items-center gap-3">
           <Spinner size="lg" />
-          <span className="font-mono text-xs uppercase tracking-widest text-[#7CF5FF]">
+          <span className="font-mono text-xs uppercase tracking-widest text-[#B8556B]">
             Verifying Security Credentials...
           </span>
         </div>
@@ -116,14 +116,14 @@ export default function DashboardLayout({
   }
 
   return (
-    <div className="min-h-screen flex flex-col md:flex-row bg-[#0A0920] text-white">
+    <div className="min-h-screen flex flex-col md:flex-row bg-transparent text-[#1E1A1C]">
       {/* MOBILE TOPBAR (< 768px) */}
-      <header className="md:hidden sticky top-0 z-40 bg-[#0E0C2B]/95 border-b border-[rgba(138,132,196,0.25)] px-4 py-3 flex items-center justify-between backdrop-blur-xl">
+      <header className="md:hidden sticky top-0 z-40 bg-white/90 border-b border-[#F0DCE2] px-4 py-3 flex items-center justify-between backdrop-blur-xl">
         <Link href="/" className="flex items-center gap-2.5">
-          <div className="w-8 h-8 rounded-lg bg-[#2D2A6E] border border-[#6C63FF]/50 flex items-center justify-center text-[#7CF5FF]">
+          <div className="w-8 h-8 rounded-lg bg-[#FAF4F6] border border-[#F0DCE2] flex items-center justify-center text-[#B8556B]">
             <ShieldCheck className="w-4 h-4" />
           </div>
-          <span className="font-display font-bold text-white text-base">SupplyShield</span>
+          <span className="font-display font-bold text-[#1E1A1C] text-base">SupplyShield</span>
         </Link>
 
         <div className="flex items-center gap-2">
@@ -134,24 +134,24 @@ export default function DashboardLayout({
           )}
           <button
             onClick={() => setCommandPaletteOpen(true)}
-            className="p-2 rounded-lg bg-white/[0.04] border border-white/[0.08] text-[#8A84C4]"
+            className="p-2 rounded-lg bg-white border border-[#F0DCE2] text-[#6E6268] hover:text-[#1E1A1C]"
             aria-label="Open command palette"
           >
             <Search className="w-4 h-4" />
           </button>
           <button
             onClick={() => setMobileMenuOpen((prev) => !prev)}
-            className="p-2 rounded-lg bg-white/[0.04] border border-white/[0.08] text-[#8A84C4]"
+            className="p-2 rounded-lg bg-white border border-[#F0DCE2] text-[#6E6268] hover:text-[#1E1A1C]"
             aria-label="Toggle mobile menu"
           >
-            {mobileMenuOpen ? <X className="w-5 h-5 text-white" /> : <Menu className="w-5 h-5 text-white" />}
+            {mobileMenuOpen ? <X className="w-5 h-5 text-[#1E1A1C]" /> : <Menu className="w-5 h-5 text-[#1E1A1C]" />}
           </button>
         </div>
       </header>
 
       {/* MOBILE DRAWER (< 768px) */}
       {mobileMenuOpen && (
-        <div className="md:hidden fixed inset-x-0 top-[57px] bottom-0 z-30 bg-[#0A0920]/95 backdrop-blur-2xl p-6 flex flex-col justify-between border-b border-[rgba(138,132,196,0.3)] animate-in fade-in duration-200">
+        <div className="md:hidden fixed inset-x-0 top-[57px] bottom-0 z-30 bg-white/95 backdrop-blur-2xl p-6 flex flex-col justify-between border-b border-[#F0DCE2] animate-in fade-in duration-200">
           <nav className="space-y-2">
             {navLinks.map((link) => {
               const active = pathname === link.href || (link.href === "/overview" && pathname === "/");
@@ -162,8 +162,8 @@ export default function DashboardLayout({
                   onClick={() => setMobileMenuOpen(false)}
                   className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all ${
                     active
-                      ? "bg-[#2D2A6E] text-[#7CF5FF] border border-[#6C63FF]/40 shadow-[0_0_15px_rgba(108,99,255,0.3)]"
-                      : "text-[#A39EC8] hover:bg-white/[0.05] hover:text-white"
+                      ? "bg-[#FAF4F6] text-[#B8556B] border border-[#F0DCE2] shadow-sm"
+                      : "text-[#6E6268] hover:bg-[#FAF4F6] hover:text-[#1E1A1C]"
                   }`}
                 >
                   {link.icon}
@@ -173,22 +173,22 @@ export default function DashboardLayout({
             })}
           </nav>
 
-          <div className="pt-6 border-t border-white/[0.08] space-y-4">
+          <div className="pt-6 border-t border-[#F0DCE2] space-y-4">
             <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-full bg-white/[0.08] border border-white/[0.1] overflow-hidden flex items-center justify-center shrink-0">
+              <div className="w-9 h-9 rounded-full bg-[#FAF4F6] border border-[#F0DCE2] overflow-hidden flex items-center justify-center shrink-0">
                 {user?.avatar_url ? (
                   <Image unoptimized src={user.avatar_url} alt={user.login} width={36} height={36} />
                 ) : (
-                  <span className="font-bold text-xs">
+                  <span className="font-bold text-xs text-[#1E1A1C]">
                     {isDemoMode ? "DM" : user?.login?.slice(0, 2).toUpperCase() || "SS"}
                   </span>
                 )}
               </div>
               <div className="min-w-0 flex-1">
-                <p className="text-sm font-semibold text-white truncate">
+                <p className="text-sm font-semibold text-[#1E1A1C] truncate">
                   {isDemoMode ? "Demo Mode" : user?.login}
                 </p>
-                <p className="text-xs text-[#8A84C4]">
+                <p className="text-xs text-[#6E6268]">
                   {isDemoMode ? "Guest Operator" : "Connected GitHub"}
                 </p>
               </div>
@@ -196,7 +196,7 @@ export default function DashboardLayout({
 
             <button
               onClick={handleSignOut}
-              className="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.08] text-sm text-[#F43F5E] transition-colors"
+              className="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-white hover:bg-[#A3213F]/5 border border-[#F0DCE2] text-sm text-[#A3213F] transition-colors"
             >
               <LogOut className="w-4 h-4" />
               <span>{isDemoMode ? "Exit Demo" : "Sign Out"}</span>
@@ -207,7 +207,7 @@ export default function DashboardLayout({
 
       {/* DESKTOP SIDEBAR (>= 768px) */}
       <aside
-        className={`hidden md:flex flex-col justify-between shrink-0 bg-[#0D0B26]/90 border-r border-[rgba(138,132,196,0.25)] backdrop-blur-2xl transition-all duration-300 relative ${
+        className={`hidden md:flex flex-col justify-between shrink-0 bg-white/80 border-r border-[#F0DCE2] backdrop-blur-2xl transition-all duration-300 relative ${
           collapsed ? "w-20 p-4" : "w-64 p-6"
         }`}
       >
@@ -215,15 +215,15 @@ export default function DashboardLayout({
           {/* Logo & Brand Header */}
           <div className="flex items-center justify-between mb-8">
             <Link href="/" className="flex items-center gap-3 overflow-hidden">
-              <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#2D2A6E] to-[#0A0920] border border-[#6C63FF]/50 flex items-center justify-center text-[#7CF5FF] shrink-0 shadow-[0_0_15px_rgba(108,99,255,0.3)]">
+              <div className="w-9 h-9 rounded-xl bg-[#FAF4F6] border border-[#F0DCE2] flex items-center justify-center text-[#B8556B] shrink-0 shadow-sm">
                 <ShieldCheck className="w-5 h-5" />
               </div>
               {!collapsed && (
                 <div className="min-w-0">
-                  <span className="font-display font-bold text-lg text-white block truncate">
+                  <span className="font-display font-bold text-lg text-[#1E1A1C] block truncate">
                     SupplyShield
                   </span>
-                  <span className="text-[10px] font-mono uppercase tracking-widest text-[#8A84C4] block -mt-1 truncate">
+                  <span className="text-[10px] font-mono uppercase tracking-widest text-[#6E6268] block -mt-1 truncate">
                     SecOps Console
                   </span>
                 </div>
@@ -234,7 +234,7 @@ export default function DashboardLayout({
             <button
               onClick={() => setCollapsed((prev) => !prev)}
               aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
-              className="p-1.5 rounded-lg bg-white/[0.04] hover:bg-white/[0.08] text-[#8A84C4] hover:text-white border border-white/[0.06] transition-colors"
+              className="p-1.5 rounded-lg bg-white hover:bg-[#FAF4F6] text-[#6E6268] hover:text-[#1E1A1C] border border-[#F0DCE2] transition-colors"
             >
               {collapsed ? <ChevronRight className="w-4 h-4" /> : <ChevronLeft className="w-4 h-4" />}
             </button>
@@ -251,8 +251,8 @@ export default function DashboardLayout({
                   title={collapsed ? link.label : undefined}
                   className={`flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium transition-all ${
                     active
-                      ? "bg-[#2D2A6E] text-[#7CF5FF] border border-[#6C63FF]/40 shadow-[0_0_15px_rgba(108,99,255,0.25)]"
-                      : "text-[#A39EC8] hover:bg-white/[0.05] hover:text-white"
+                      ? "bg-[#FAF4F6] text-[#B8556B] border border-[#F0DCE2] shadow-sm"
+                      : "text-[#6E6268] hover:bg-[#FAF4F6] hover:text-[#1E1A1C]"
                   } ${collapsed ? "justify-center px-2" : ""}`}
                 >
                   {link.icon}
@@ -264,35 +264,35 @@ export default function DashboardLayout({
         </div>
 
         {/* Sidebar Footer: Org & User Info */}
-        <div className="pt-4 border-t border-white/[0.08]">
+        <div className="pt-4 border-t border-[#F0DCE2]">
           {!collapsed ? (
             <div className="space-y-3">
-              <div className="p-2.5 rounded-xl bg-white/[0.03] border border-white/[0.06] flex items-center justify-between">
+              <div className="p-2.5 rounded-xl bg-white border border-[#F0DCE2] flex items-center justify-between shadow-[0_1px_2px_rgba(30,26,28,0.04)]">
                 <div className="flex items-center gap-2 min-w-0">
-                  <Building2 className="w-4 h-4 text-[#7CF5FF] shrink-0" />
-                  <span className="text-xs font-mono font-medium text-white truncate">
+                  <Building2 className="w-4 h-4 text-[#B8556B] shrink-0" />
+                  <span className="text-xs font-mono font-medium text-[#1E1A1C] truncate">
                     {isDemoMode ? "demo-sandbox" : "acme-corp"}
                   </span>
                 </div>
-                <span className="w-2 h-2 rounded-full bg-[#34D399]" title="Connected organization" />
+                <span className="w-2 h-2 rounded-full bg-[#2F7D5B]" title="Connected organization" />
               </div>
 
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2.5 min-w-0">
-                  <div className="w-8 h-8 rounded-full bg-white/[0.08] border border-white/[0.1] overflow-hidden flex items-center justify-center shrink-0">
+                  <div className="w-8 h-8 rounded-full bg-[#FAF4F6] border border-[#F0DCE2] overflow-hidden flex items-center justify-center shrink-0">
                     {user?.avatar_url ? (
                       <Image unoptimized src={user.avatar_url} alt={user.login} width={32} height={32} />
                     ) : (
-                      <span className="font-bold text-xs">
+                      <span className="font-bold text-xs text-[#1E1A1C]">
                         {isDemoMode ? "DM" : user?.login?.slice(0, 2).toUpperCase() || "SS"}
                       </span>
                     )}
                   </div>
                   <div className="min-w-0">
-                    <p className="text-xs font-semibold text-white truncate">
+                    <p className="text-xs font-semibold text-[#1E1A1C] truncate">
                       {isDemoMode ? "Demo Mode" : user?.login}
                     </p>
-                    <p className="text-[10px] text-[#8A84C4] font-mono">
+                    <p className="text-[10px] text-[#6E6268] font-mono">
                       {isDemoMode ? "Guest Operator" : "SecOps Lead"}
                     </p>
                   </div>
@@ -301,7 +301,7 @@ export default function DashboardLayout({
                 <button
                   onClick={handleSignOut}
                   title={isDemoMode ? "Exit Demo" : "Sign out"}
-                  className="p-1.5 rounded-lg text-[#8A84C4] hover:text-[#F43F5E] hover:bg-white/[0.04] transition-colors"
+                  className="p-1.5 rounded-lg text-[#6E6268] hover:text-[#A3213F] hover:bg-[#A3213F]/5 transition-colors"
                 >
                   <LogOut className="w-4 h-4" />
                 </button>
@@ -309,11 +309,11 @@ export default function DashboardLayout({
             </div>
           ) : (
             <div className="flex flex-col items-center gap-3">
-              <div className="w-8 h-8 rounded-full bg-white/[0.08] border border-white/[0.1] overflow-hidden flex items-center justify-center shrink-0">
+              <div className="w-8 h-8 rounded-full bg-[#FAF4F6] border border-[#F0DCE2] overflow-hidden flex items-center justify-center shrink-0">
                 {user?.avatar_url ? (
                   <Image unoptimized src={user.avatar_url} alt={user.login} width={32} height={32} />
                 ) : (
-                  <span className="font-bold text-xs">
+                  <span className="font-bold text-xs text-[#1E1A1C]">
                     {isDemoMode ? "DM" : user?.login?.slice(0, 2).toUpperCase() || "SS"}
                   </span>
                 )}
@@ -321,7 +321,7 @@ export default function DashboardLayout({
               <button
                 onClick={handleSignOut}
                 title={isDemoMode ? "Exit Demo" : "Sign out"}
-                className="p-1.5 rounded-lg text-[#8A84C4] hover:text-[#F43F5E] hover:bg-white/[0.04] transition-colors"
+                className="p-1.5 rounded-lg text-[#6E6268] hover:text-[#A3213F] hover:bg-[#A3213F]/5 transition-colors"
               >
                 <LogOut className="w-4 h-4" />
               </button>
@@ -333,19 +333,19 @@ export default function DashboardLayout({
       {/* MAIN VIEWPORT CONTAINER */}
       <div className="flex-1 flex flex-col min-w-0">
         {/* DESKTOP TOPBAR */}
-        <header className="hidden md:flex h-16 bg-[#0E0C2B]/80 border-b border-[rgba(138,132,196,0.2)] px-8 items-center justify-between backdrop-blur-xl">
+        <header className="hidden md:flex h-16 bg-white/80 border-b border-[#F0DCE2] px-8 items-center justify-between backdrop-blur-xl">
           {/* Command Palette Trigger */}
           <button
             data-testid="command-palette-trigger"
             aria-label="Search commands and repositories"
             onClick={() => setCommandPaletteOpen(true)}
-            className="flex items-center gap-3 px-3.5 py-2 rounded-xl bg-white/[0.04] hover:bg-white/[0.07] border border-[rgba(138,132,196,0.25)] text-xs text-[#A39EC8] hover:text-white transition-all w-72 justify-between cursor-pointer shadow-sm"
+            className="flex items-center gap-3 px-3.5 py-2 rounded-xl bg-white hover:bg-[#FAF4F6] border border-[#F0DCE2] text-xs text-[#6E6268] hover:text-[#1E1A1C] transition-all w-72 justify-between cursor-pointer shadow-[0_1px_2px_rgba(30,26,28,0.04)]"
           >
             <div className="flex items-center gap-2">
-              <Search className="w-3.5 h-3.5 text-[#7CF5FF]" />
+              <Search className="w-3.5 h-3.5 text-[#B8556B]" />
               <span>Search repos, actions...</span>
             </div>
-            <kbd className="px-1.5 py-0.5 rounded bg-black/40 border border-white/[0.1] font-mono text-[10px] text-[#8A84C4]">
+            <kbd className="px-1.5 py-0.5 rounded bg-[#FAF4F6] border border-[#F0DCE2] font-mono text-[10px] text-[#6E6268]">
               Cmd+K
             </kbd>
           </button>
@@ -357,8 +357,8 @@ export default function DashboardLayout({
                 Demo mode
               </span>
             )}
-            <div className="flex items-center gap-2 text-xs font-mono text-[#7CF5FF] px-3 py-1 rounded-full bg-[#7CF5FF]/10 border border-[#7CF5FF]/30">
-              <span className="w-2 h-2 rounded-full bg-[#7CF5FF] animate-live-pulse" />
+            <div className="flex items-center gap-2 text-xs font-mono text-[#2F7D5B] px-3 py-1 rounded-full bg-[#2F7D5B]/10 border border-[#2F7D5B]/30">
+              <span className="w-2 h-2 rounded-full bg-[#2F7D5B] animate-live-pulse" />
               <span>Perimeter: SECURE</span>
             </div>
           </div>

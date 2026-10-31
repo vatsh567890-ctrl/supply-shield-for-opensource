@@ -7,9 +7,6 @@ import time
 import uuid
 from typing import Any
 
-import numpy as np
-from ml.features import FEATURE_NAMES, PackageDiffData, extract_feature_vector
-from ml.model_loader import load_verified_model
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.analyzer.models import Finding
@@ -23,7 +20,7 @@ logger = logging.getLogger("supplyshield.pipeline")
 async def run_ml_shadow(
     session: AsyncSession,
     analysis_id: uuid.UUID,
-    diff_data: PackageDiffData,
+    diff_data: Any,
 ) -> dict[str, Any] | None:
     """Execute ML risk classifier in shadow mode.
 
@@ -32,7 +29,19 @@ async def run_ml_shadow(
     """
     settings = get_settings()
     if settings.ML_MODE == "off":
-        logger.debug("ML shadow mode disabled (ML_MODE=off).")
+        logger.info("ML shadow mode is disabled (ML_MODE=off); continuing analysis without ML.")
+        return None
+
+    try:
+        import numpy as np
+
+        from app.ml.features import FEATURE_NAMES, extract_feature_vector
+        from app.ml.model_loader import load_verified_model
+    except Exception as import_err:
+        logger.warning(
+            "ML modules or dependencies not available (%s); continuing analysis without ML.",
+            type(import_err).__name__,
+        )
         return None
 
     start_time = time.perf_counter()
@@ -98,7 +107,7 @@ async def run_ml_shadow(
 async def execute_pipeline(
     analysis_id: uuid.UUID,
     session: AsyncSession | None = None,
-    diff_data: PackageDiffData | None = None,
+    diff_data: Any | None = None,
     findings: list[Finding] | None = None,
 ) -> dict[str, Any]:
     """Execute analysis pipeline from PR diff to Check Run update.

@@ -1,0 +1,50 @@
+{
+  "total_samples": 960,
+  "malicious_count": 120,
+  "benign_count": 840,
+  "ratio": "1:7.0",
+  "splits": {
+    "train": {
+      "count": 531,
+      "malicious": 53,
+      "benign": 478,
+      "start": "2018-01-01T05:30:00Z",
+      "end": "2022-12-30T05:30:00Z"
+    },
+    "val": {
+      "count": 150,
+      "malicious": 29,
+      "benign": 121,
+      "start": "2023-01-04T14:24:34.759846Z",
+      "end": "2024-03-26T17:53:00.435830Z"
+    },
+    "test": {
+      "count": 279,
+      "malicious": 38,
+      "benign": 241,
+      "start": "2024-04-02T08:11:40.295927Z",
+      "end": "2026-10-31T05:30:00Z"
+    }
+  },
+  "feature_count": 18,
+  "features": [
+    "install_hook_added",
+    "install_hook_modified",
+    "install_hook_length",
+    "dynamic_exec_count",
+    "encoded_payload_blob_count",
+    "max_entropy",
+    "new_network_hosts_count",
+    "raw_ip_flag",
+    "secret_env_reads_count",
+    "typosquat_min_distance",
+    "dropped_provenance_flag",
+    "binary_files_added",
+    "minified_long_line_files_added",
+    "file_count_delta",
+    "size_delta_bytes",
+    "dependency_count_delta",
+    "publish_to_analysis_hours",
+    "maintainer_count_change"
+  ]
+}

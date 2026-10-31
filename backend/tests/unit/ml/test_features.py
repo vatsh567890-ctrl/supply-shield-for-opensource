@@ -3,7 +3,7 @@
 Tests each of the 18 features in FEATURE_NAMES for non-zero and zero values.
 """
 
-from ml.features import (
+from app.ml.features import (
     FEATURE_NAMES,
     PackageDiffData,
     extract_features,

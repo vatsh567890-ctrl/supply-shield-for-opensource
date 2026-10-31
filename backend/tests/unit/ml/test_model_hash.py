@@ -5,7 +5,8 @@ import tempfile
 from pathlib import Path
 
 import pytest
-from ml.model_loader import (
+
+from app.ml.model_loader import (
     ModelSecurityError,
     load_verified_model,
 )
@@ -21,11 +22,10 @@ def test_verified_model_loads_cleanly() -> None:
 
 def test_altered_model_bytes_rejected() -> None:
     """Verify that tampering with model bytes raises ModelSecurityError."""
-    # Find original models dir
-    root_dir = Path(__file__).resolve().parent.parent.parent.parent.parent
-    orig_models_dir = root_dir / "ml" / "models"
+    # Find models dir
+    orig_models_dir = Path(__file__).resolve().parents[3] / "app" / "ml" / "models"
     if not orig_models_dir.exists():
-        orig_models_dir = Path(__file__).resolve().parent.parent.parent.parent / "ml" / "models"
+        orig_models_dir = Path(__file__).resolve().parents[4] / "ml" / "models"
 
     with tempfile.TemporaryDirectory() as tmp_dir:
         tmp_path = Path(tmp_dir)

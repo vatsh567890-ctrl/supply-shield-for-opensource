@@ -4,10 +4,10 @@ import uuid
 from unittest.mock import AsyncMock, MagicMock, patch
 
 import pytest
-from ml.features import PackageDiffData
 
 from app.analyzer.models import Finding, Severity
 from app.config import Settings
+from app.ml.features import PackageDiffData
 from app.worker.pipeline import execute_pipeline, run_ml_shadow
 
 
@@ -110,7 +110,7 @@ async def test_shadow_mode_fail_safe_on_error(
     # Force model loader to raise an exception
     with (
         patch(
-            "app.worker.pipeline.load_verified_model",
+            "app.ml.model_loader.load_verified_model",
             side_effect=RuntimeError("Simulated Model Failure"),
         ),
         patch("app.worker.pipeline.get_settings", return_value=Settings(ML_MODE="shadow")),

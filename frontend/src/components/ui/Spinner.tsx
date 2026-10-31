@@ -15,7 +15,7 @@ export const Spinner: React.FC<{
     <div
       role="status"
       aria-label={label}
-      className={`inline-block border-[#6C63FF]/30 border-t-[#7CF5FF] rounded-full animate-spin ${sizes[size]} ${className}`}
+      className={`inline-block border-[#B8556B]/20 border-t-[#B8556B] rounded-full animate-spin ${sizes[size]} ${className}`}
     >
       <span className="sr-only">{label}</span>
     </div>

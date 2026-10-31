@@ -6,9 +6,9 @@ export const Table: React.FC<React.TableHTMLAttributes<HTMLTableElement>> = ({
   ...props
 }) => {
   return (
-    <div className="overflow-x-auto w-full rounded-2xl border border-[rgba(138,132,196,0.25)] bg-white/[0.03] backdrop-blur-xl shadow-[0_8px_32px_rgba(0,0,0,0.36)]">
+    <div className="overflow-x-auto w-full rounded-[12px] border border-[#F0DCE2] bg-white shadow-[0_1px_2px_rgba(30,26,28,0.04)]">
       <table
-        className={`w-full text-left text-sm text-[#D1CEE5] border-collapse ${className}`}
+        className={`w-full text-left text-sm text-[#1E1A1C] border-collapse ${className}`}
         {...props}
       >
         {children}
@@ -21,7 +21,7 @@ export const TableHeader: React.FC<
   React.HTMLAttributes<HTMLTableSectionElement>
 > = ({ children, className = "", ...props }) => (
   <thead
-    className={`bg-white/[0.04] border-b border-[rgba(138,132,196,0.2)] text-xs font-semibold uppercase tracking-wider text-[#A39EC8] ${className}`}
+    className={`bg-[#FAF4F6] border-b border-[#F0DCE2] text-xs font-semibold uppercase tracking-wider text-[#6E6268] ${className}`}
     {...props}
   >
     {children}
@@ -32,7 +32,7 @@ export const TableRow: React.FC<
   React.HTMLAttributes<HTMLTableRowElement>
 > = ({ children, className = "", ...props }) => (
   <tr
-    className={`border-b border-white/[0.04] hover:bg-white/[0.05] transition-colors ${className}`}
+    className={`border-b border-[#F0DCE2] hover:bg-[#FAF4F6] transition-colors ${className}`}
     {...props}
   >
     {children}
