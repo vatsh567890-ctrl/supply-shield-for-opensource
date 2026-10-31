@@ -37,8 +37,17 @@ FEATURE_NAMES: list[str] = [
 
 # Binary file extensions
 BINARY_EXTENSIONS = {
-    ".node", ".so", ".dylib", ".dll", ".exe", ".bin",
-    ".elf", ".o", ".a", ".pyd", ".wasm",
+    ".node",
+    ".so",
+    ".dylib",
+    ".dll",
+    ".exe",
+    ".bin",
+    ".elf",
+    ".o",
+    ".a",
+    ".pyd",
+    ".wasm",
 }
 
 # Suspicious dynamic execution patterns
@@ -54,9 +63,18 @@ DYNAMIC_EXEC_PATTERNS = [
 
 # Secret-like environment variable access
 SECRET_ENV_PATTERNS = [
-    re.compile(r"process\.env(?:\.|\s*\[\s*['\"])(?:AWS_|GITHUB_|NPM_|SLACK_|TOKEN|SECRET|KEY|PASSWORD|AUTH|PRIVATE|CREDENTIAL)", re.IGNORECASE),
-    re.compile(r"os\.environ(?:\.get\s*\(\s*['\"]|\s*\[\s*['\"])(?:AWS_|GITHUB_|NPM_|SLACK_|TOKEN|SECRET|KEY|PASSWORD|AUTH|PRIVATE|CREDENTIAL)", re.IGNORECASE),
-    re.compile(r"getenv\s*\(\s*['\"](?:AWS_|GITHUB_|NPM_|SLACK_|TOKEN|SECRET|KEY|PASSWORD|AUTH|PRIVATE|CREDENTIAL)", re.IGNORECASE),
+    re.compile(
+        r"process\.env(?:\.|\s*\[\s*['\"])(?:AWS_|GITHUB_|NPM_|SLACK_|TOKEN|SECRET|KEY|PASSWORD|AUTH|PRIVATE|CREDENTIAL)",
+        re.IGNORECASE,
+    ),
+    re.compile(
+        r"os\.environ(?:\.get\s*\(\s*['\"]|\s*\[\s*['\"])(?:AWS_|GITHUB_|NPM_|SLACK_|TOKEN|SECRET|KEY|PASSWORD|AUTH|PRIVATE|CREDENTIAL)",
+        re.IGNORECASE,
+    ),
+    re.compile(
+        r"getenv\s*\(\s*['\"](?:AWS_|GITHUB_|NPM_|SLACK_|TOKEN|SECRET|KEY|PASSWORD|AUTH|PRIVATE|CREDENTIAL)",
+        re.IGNORECASE,
+    ),
 ]
 
 # Encoded blobs
@@ -142,8 +160,29 @@ def load_top_packages(ecosystem: str) -> list[str]:
                 pass
 
     if ecosystem == "npm":
-        return ["react", "react-dom", "lodash", "express", "axios", "chalk", "tslib", "uuid", "webpack", "next"]
-    return ["boto3", "botocore", "requests", "urllib3", "setuptools", "cryptography", "numpy", "pandas", "fastapi"]
+        return [
+            "react",
+            "react-dom",
+            "lodash",
+            "express",
+            "axios",
+            "chalk",
+            "tslib",
+            "uuid",
+            "webpack",
+            "next",
+        ]
+    return [
+        "boto3",
+        "botocore",
+        "requests",
+        "urllib3",
+        "setuptools",
+        "cryptography",
+        "numpy",
+        "pandas",
+        "fastapi",
+    ]
 
 
 def extract_features(diff: PackageDiffData) -> dict[str, float]:
@@ -151,8 +190,12 @@ def extract_features(diff: PackageDiffData) -> dict[str, float]:
     features: dict[str, float] = dict.fromkeys(FEATURE_NAMES, 0.0)
 
     # 1. Install Hook Analysis (npm & PyPI)
-    old_scripts = diff.old_manifest.get("scripts", {}) if isinstance(diff.old_manifest, dict) else {}
-    new_scripts = diff.new_manifest.get("scripts", {}) if isinstance(diff.new_manifest, dict) else {}
+    old_scripts = (
+        diff.old_manifest.get("scripts", {}) if isinstance(diff.old_manifest, dict) else {}
+    )
+    new_scripts = (
+        diff.new_manifest.get("scripts", {}) if isinstance(diff.new_manifest, dict) else {}
+    )
     hook_keys = {"preinstall", "install", "postinstall", "prepublish", "prepare"}
 
     added_hooks: list[str] = []
@@ -300,8 +343,12 @@ def extract_features(diff: PackageDiffData) -> dict[str, float]:
     features["size_delta_bytes"] = float(new_size - old_size)
 
     # Dependency count delta
-    old_deps = diff.old_manifest.get("dependencies", {}) if isinstance(diff.old_manifest, dict) else {}
-    new_deps = diff.new_manifest.get("dependencies", {}) if isinstance(diff.new_manifest, dict) else {}
+    old_deps = (
+        diff.old_manifest.get("dependencies", {}) if isinstance(diff.old_manifest, dict) else {}
+    )
+    new_deps = (
+        diff.new_manifest.get("dependencies", {}) if isinstance(diff.new_manifest, dict) else {}
+    )
     old_dep_count = len(old_deps) if isinstance(old_deps, dict) else 0
     new_dep_count = len(new_deps) if isinstance(new_deps, dict) else 0
     features["dependency_count_delta"] = float(new_dep_count - old_dep_count)
@@ -329,4 +376,3 @@ def extract_feature_vector(diff: PackageDiffData) -> list[float]:
     """Return ordered feature values as a numeric list matching FEATURE_NAMES."""
     feats = extract_features(diff)
     return [feats[name] for name in FEATURE_NAMES]
-

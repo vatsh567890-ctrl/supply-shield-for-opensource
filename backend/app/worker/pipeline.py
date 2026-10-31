@@ -34,6 +34,7 @@ async def run_ml_shadow(
 
     try:
         import numpy as np
+
         from app.ml.features import FEATURE_NAMES, extract_feature_vector
         from app.ml.model_loader import load_verified_model
     except Exception as import_err:
